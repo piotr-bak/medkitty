@@ -8,7 +8,7 @@ export default function PillPanel() {
                     <p>1/4 pill</p>
                 </div>
             </div>
-            <button className="self-center flex-end w-24 py-5 -mt-[18px] bg-greenPrimary text-white text-xl font-bold rounded-full text-center w-[130px]">take</button>
+            <button className="self-center flex-end w-24 py-5 -mt-[18px] bg-greenPrimary hover:bg-greenAccent capitalize text-white text-xl font-bold rounded-full text-center w-[130px]">take</button>
         </div>
     );
   }
