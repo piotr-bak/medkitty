@@ -1,11 +1,15 @@
+import Calendar from "./components/dashboard/Calendar";
+import PillPanel from "./components/dashboard/PillPanel";
+import DashboardImg from "./components/dashboard/Glyph";
+
 export default function Home() {
   return (
-    <main className="">
-      Dashboard
-      <h1>Animal Name</h1>
-      <span>Avatar</span>
-      <h2>next pill</h2>
-      <button>Done!</button>
+    <main className="flex items-center justify-center">
+      <div className="pt-12">
+        <Calendar />
+        <PillPanel />
+        <DashboardImg />
+      </div>
     </main>
   );
 }

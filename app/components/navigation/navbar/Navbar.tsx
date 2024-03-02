@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Navbar() {
     return (
         <nav className='relative px-4 py-4 flex justify-between items-center bg-yellowPrimary'>
-            <a className='text-3xl font-bold text-greenPrimary hover:text-black leading-none' href='#'>
+            <a className='text-3xl font-bold text-greenPrimary hover:text-black leading-none' href='/'>
                 <svg
                     className='h-10 fill-current'
                     viewBox='0 0 512 512'
