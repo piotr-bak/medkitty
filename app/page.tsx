@@ -6,9 +6,7 @@ export default function Home() {
   return (
     <main className="flex items-center justify-center">
       <div className="pt-12">
-        <Calendar />
-        <PillPanel />
-        <DashboardImg />
+      <h1>Welcome to MedKitty</h1>
       </div>
     </main>
   );
