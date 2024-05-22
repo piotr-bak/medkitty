@@ -80,3 +80,5 @@ next-env.d.ts
 
 # misc
 *.pem
+
+*storybook.log
