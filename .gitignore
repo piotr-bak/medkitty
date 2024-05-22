@@ -1,0 +1,82 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules/
+.pnpm-debug.log*
+.pnpm-store/
+.pnpm-lock.yaml
+.pnpm/
+.yarn/install-state.gz
+.pnp.js
+.yarn-integrity
+
+# logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# prisma
+prisma/.env
+prisma/migrations/
+prisma/dev.db
+
+# build and production
+dist/
+build/
+out/
+
+# dependency directories
+node_modules/
+.pnpm/
+
+# optional eslint cache
+.eslintcache
+
+# optional stylelint cache
+.stylelintcache
+
+# optional REPL history
+.node_repl_history
+
+# IDE-specific files
+.vscode/
+.idea/
+*.swp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# testing
+coverage/
+.nyc_output/
+
+# optional lock files
+package-lock.json
+yarn.lock
+
+# next.js
+.next/
+
+# storybook
+storybook-static/
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# misc
+*.pem
