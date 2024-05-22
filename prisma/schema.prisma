@@ -10,5 +10,50 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  username String
+  email    String   @unique
+  password String
+  googleId String?  @unique
+  role     String   @default("user")
+
+  pets     Pet[]    @relation("UserPets")
+}
+
+model Pet {
+  id     Int    @id @default(autoincrement())
+  name   String
+  breed  String
+  age    Int
+  owners User[] @relation("UserPets")
+
+  medicationSchedules MedicationSchedule[]
+}
+
+model Medicine {
+  id             Int    @id @default(autoincrement())
+  name           String
+  packagingDoses Int
+  packagingUnit  String
+
+  medicationSchedules MedicationSchedule[]
+}
+
+model MedicationSchedule {
+  id                 Int      @id @default(autoincrement())
+  petId              Int
+  medicineId         Int
+  dosage             Float
+  intervalMinutes    Int
+  lastAdministered   DateTime
+  nextAdministration DateTime
+  administeredCount  Int
+
+  pet      Pet      @relation(fields: [petId], references: [id])
+  medicine Medicine @relation(fields: [medicineId], references: [id])
 }
