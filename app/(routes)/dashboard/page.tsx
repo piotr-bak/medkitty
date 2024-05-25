@@ -1,11 +1,10 @@
-import { Dashboard } from "@/app/_components/Dashboard/Dashboard";
-import { SessionProvider } from "next-auth/react";
+import { Board } from "@/app/_components/Board/Board"
 import styles from './page.module.scss';
 
-export default function DashboardPage() {
+export default function Dashboard() {
     return (
-        <SessionProvider>
-            <Dashboard />
-        </SessionProvider>
+        <div className={styles.dashboard} >
+            <Board />
+        </div>
     )
 }
