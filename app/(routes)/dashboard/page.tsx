@@ -1,10 +1,20 @@
-import { SignOutButton } from "@/app/_components/SignOutButton";
+import { SignOutButton } from "@/app/_components/SignInOutButtons/SignOutButton";
+import { UserInfo } from "@/app/_components/UserInfo/UserInfo";
+import { SessionProvider } from "next-auth/react";
+import { ReactNode } from "react";
+import styles from './page.module.scss';
 
-export default function Dashboard() {
+interface DashboardChildren {
+    children: ReactNode;
+}
+export default function Dashboard( { children }: DashboardChildren ) {
     return (
-        <>
-            <h1>welcome, logged user!</h1>
-            <SignOutButton />
-        </>
+        <SessionProvider>
+            <nav className={styles.navbar}>
+                <UserInfo />
+                <SignOutButton />
+            </nav>
+            {children}
+        </SessionProvider>
     )
 }

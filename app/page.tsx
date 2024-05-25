@@ -1,4 +1,4 @@
-import { SignInButton } from "./_components/SignInButton";
+import { SignInButton } from "./_components/SignInOutButtons/SignInButton";
 import styles from "./page.module.css";
 
 export default function Home() {
