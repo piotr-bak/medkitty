@@ -1,11 +1,11 @@
-import { SignInButton } from "./_components/SignInOutButtons/SignInButton";
+import { AuthButton } from "./_components/SignInOutButtons/AuthButton";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
     <main className={styles.main}>
       <h1>MedKitty</h1>
-      <SignInButton />
+      <AuthButton role={'sign-in'} />
     </main>
   );
 }
