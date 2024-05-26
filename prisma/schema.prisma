@@ -15,25 +15,22 @@ datasource db {
 }
 
 model User {
-  // Below for Authentication
-  id            Int             @id @default(autoincrement())
+  id            String     @id @default(uuid())
   name          String?
-  email         String          @unique
+  email         String     @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  googleId      String?         @unique
-
-  // Below for MedKitty
-  pets     Pet[]    @relation("UserPets")
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  googleId      String?    @unique
+  pets          Pet[]      @relation("UserPets")
 }
 
 model Account {
-  id                Int         @id @default(autoincrement())
-  userId            Int
+  id                String   @id @default(uuid())
+  userId            String
   type              String
   provider          String
   providerAccountId String
@@ -44,64 +41,56 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
- 
-  createdAt         DateTime    @default(now())
-  updatedAt         DateTime    @updatedAt
- 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@unique([provider, providerAccountId])
 }
 
 model Session {
-  id           Int       @id @default(autoincrement())
-  sessionToken String    @unique
-  userId       Int
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
   expires      DateTime
-  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
- 
+
 model VerificationToken {
-  id         Int       @id @default(autoincrement())
+  id         String   @id @default(uuid())
   identifier String
-  token      String    @unique
+  token      String   @unique
   expires    DateTime
- 
   @@unique([identifier, token])
 }
 
 model Pet {
-  id     Int    @id @default(autoincrement())
-  name   String
-  breed  String
-  age    Int
-  owners User[] @relation("UserPets")
-
+  id                 String             @id @default(uuid())
+  name               String
+  breed              String
+  age                Int
+  owners             User[]             @relation("UserPets")
   medicationSchedules MedicationSchedule[]
 }
 
 model Medicine {
-  id             Int    @id @default(autoincrement())
-  name           String
-  packagingDoses Int
-  packagingUnit  String
-
+  id                  String             @id @default(uuid())
+  name                String
+  packagingDoses      Int
+  packagingUnit       String
   medicationSchedules MedicationSchedule[]
 }
 
 model MedicationSchedule {
-  id                 Int      @id @default(autoincrement())
-  petId              Int
-  medicineId         Int
+  id                 String       @id @default(uuid())
+  petId              String
+  medicineId         String
   dosage             Float
   intervalMinutes    Int
   lastAdministered   DateTime
   nextAdministration DateTime
   administeredCount  Int
-
-  pet      Pet      @relation(fields: [petId], references: [id])
-  medicine Medicine @relation(fields: [medicineId], references: [id])
+  pet                Pet          @relation(fields: [petId], references: [id])
+  medicine           Medicine     @relation(fields: [medicineId], references: [id])
 }
