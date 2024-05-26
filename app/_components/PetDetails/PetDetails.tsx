@@ -1,12 +1,12 @@
 'use client'
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import type { Pet as PetDetails } from '@/app/_types';
+import type { Pet as PetDetails, HidePetList } from '@/app/_types';
 import styles from './petdetails.module.scss';
 
 type Mode = 'add' | 'edit';
 
-export function PetDetails() {
+export function PetDetails( { hideDetailsScreen }: HidePetList ) {
     const [mode, setMode] = useState( 'add' );
 
     const {
@@ -17,6 +17,7 @@ export function PetDetails() {
     } = useForm<PetDetails>();
 
     const onSubmit: SubmitHandler<PetDetails> = async ( data ) => {
+        hideDetailsScreen();
         try {
             const response = await fetch( '/api/pets', {
                 method: 'POST',

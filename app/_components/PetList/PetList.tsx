@@ -1,10 +1,14 @@
 'use client'
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import type { Pet } from "@/app/_types";
+import type { Pet, ShowPetList } from "@/app/_types";
 import styles from './petlist.module.scss';
 
-export function PetList() {
+interface PetListProps extends ShowPetList {
+    refreshPets: boolean;
+}
+
+export function PetList( { showDetailsScreen, refreshPets }: PetListProps ) {
     const { data: session, status } = useSession();
     const [pets, setPets] = useState<Pet[]>( [] );
 
@@ -16,7 +20,7 @@ export function PetList() {
         };
 
         fetchPets();
-    }, [] );
+    }, [refreshPets] );
 
     return (
         <div className={styles.board}>
@@ -33,7 +37,7 @@ export function PetList() {
                     } )}
                 </ul>
             )}
-            <button className={styles.buttonAdd} aria-label="add pet">{'+'}</button>
+            <button className={styles.buttonAdd} aria-label="add pet" onClick={showDetailsScreen}>{'+'}</button>
         </div>
     )
 }
