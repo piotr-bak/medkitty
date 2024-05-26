@@ -43,12 +43,12 @@ export function PetDetails() {
     return (
         <form className={styles.form} onSubmit={handleSubmit( onSubmit )}>
             <label>name</label>
-            <input {...register( 'name', { required: true } )} />
+            <input className={styles.input} {...register( 'name', { required: true } )} />
             <label>age</label>
-            <input {...register( 'age', { required: true } )} />
+            <input className={styles.input} {...register( 'age', { required: true } )} />
             <label>breed</label>
-            <input {...register( 'breed', { required: true } )} />
-            <input type='submit' />
+            <input className={styles.input} {...register( 'breed', { required: true } )} />
+            <input className={styles.submitButton} type='submit' />
         </form>
     )
 }
