@@ -71,30 +71,30 @@ Performing these calculations on the frontend reduces server load and operationa
 
 ### Users Table
 
-| Column Name | Type    | Description                                 |
-| ----------- | ------- | ------------------------------------------- |
-| user_id     | Integer | Primary Key                                 |
-| username    | String  | Username of the user                        |
-| email       | String  | Email address of the user                   |
-| password    | String  | Hashed password of the user                 |
-| google_id   | String  | Google OAuth unique identifier for the user |
-| role        | String  | User role and privilages (admin/non-admin)  |
+| Column Name | Type   | Description                                 |
+| ----------- | ------ | ------------------------------------------- |
+| user_id     | String | Primary Key                                 |
+| username    | String | Username of the user                        |
+| email       | String | Email address of the user                   |
+| password    | String | Hashed password of the user                 |
+| google_id   | String | Google OAuth unique identifier for the user |
+| role        | String | User role and privileges (admin/non-admin)  |
 
 ### Pets Table
 
 | Column Name | Type    | Description                         |
 | ----------- | ------- | ----------------------------------- |
-| pet_id      | Integer | Primary Key                         |
+| pet_id      | String  | Primary Key                         |
 | pet_name    | String  | Name of the pet                     |
 | breed       | String  | Breed of the pet                    |
 | age         | Integer | Age of the pet                      |
-| owners      | Integer | Foreign Key referencing Users table |
+| owners      | String  | Foreign Key referencing Users table |
 
 ### Medicines Table
 
 | Column Name     | Type    | Description                                                  |
 | --------------- | ------- | ------------------------------------------------------------ |
-| medicine_id     | Integer | Primary Key                                                  |
+| medicine_id     | String  | Primary Key                                                  |
 | medicine_name   | String  | Name of the medicine                                         |
 | packaging_doses | Integer | Total number of doses in the package                         |
 | packaging_unit  | String  | Unit of the doses (e.g., 'pieces', 'mg', 'ml', 'injections') |
@@ -103,10 +103,10 @@ Performing these calculations on the frontend reduces server load and operationa
 
 | Column Name         | Type      | Description                                   |
 | ------------------- | --------- | --------------------------------------------- |
-| schedule_id         | Integer   | Primary Key                                   |
-| pet_id              | Integer   | Foreign Key referencing Pets table            |
-| medicine_id         | Integer   | Foreign Key referencing Medicines table       |
-| dosage              | Number    | Dosage of the medicine                        |
+| schedule_id         | String    | Primary Key                                   |
+| pet_id              | String    | Foreign Key referencing Pets table            |
+| medicine_id         | String    | Foreign Key referencing Medicines table       |
+| dosage              | Float     | Dosage of the medicine                        |
 | interval_minutes    | Integer   | Dosage interval in minutes                    |
 | last_administered   | Timestamp | Timestamp of the last administered dose       |
 | next_administration | Timestamp | Timestamp of the next dose to be administered |
