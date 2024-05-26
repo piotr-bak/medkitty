@@ -29,9 +29,12 @@ importers:
       sass:
         specifier: ^1.77.2
         version: 1.77.2
+      uuidv7:
+        specifier: ^1.0.0
+        version: 1.0.0
       vercel:
-        specifier: ^34.2.2
-        version: 34.2.2
+        specifier: ^34.2.3
+        version: 34.2.3
     devDependencies:
       '@chromatic-com/storybook':
         specifier: ^1.4.0
@@ -1976,8 +1979,8 @@ packages:
   '@vercel/hydrogen@1.0.2':
     resolution: {integrity: sha512-/Q2MKk1GfOuZAnkE9jQexjtUQqanbY65R+xtJWd9yKIgwcfRI1hxiNH3uXyVM5AvLoY+fxxULkSuxDtUKpkJpQ==}
 
-  '@vercel/next@4.2.13':
-    resolution: {integrity: sha512-DMOPezCeKb6r4hJ9WM4FO+7FGNwNgCF6RHoVZe5FmHI3C8mvzQqzPgausvXQq33l1YR5t81xDZpJRqprYEsIgg==}
+  '@vercel/next@4.2.14':
+    resolution: {integrity: sha512-CBeaXIGS7mOgFSH429HRjIOxJBbtiQW6gf1mz/rIQoNcZjSxhfe+nMAxfkDlXAzCsGQVFbzVR9omnijTFbC79w==}
 
   '@vercel/nft@0.27.0':
     resolution: {integrity: sha512-W5pValyhToK9hbgEUAM6sLRUIl1I++RsFnXKHXtND50P1+vZ+OYPCzq1OOz0Ok6ghK6aOwae8G/rEAXkLedC+w==}
@@ -5870,6 +5873,10 @@ packages:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
 
+  uuidv7@1.0.0:
+    resolution: {integrity: sha512-XkvPwTtSmYwxIE1FSYQTYg79zHL1ZWV5vM/Qyl9ahXCU8enOPPA4bTjzvafvYUB7l2+miv4EqK/qEe75cOXIdA==}
+    hasBin: true
+
   v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
 
@@ -5880,8 +5887,8 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  vercel@34.2.2:
-    resolution: {integrity: sha512-8JGdsyJ7kxbmp74fqgD+lIP7/gPs51aYoISdckgvopKUsWUBkYe0HzoFvutW6L3ODHmSOoNVXaOmqUjOMtPMHQ==}
+  vercel@34.2.3:
+    resolution: {integrity: sha512-54Uo4TyOAunhsOGOTBPsCZBBAY5Fku1AVYh8oPGFGSe0aF7lP67nqmX/bJ/jL9A0KqW3hPdIV+LcOuiMFRm/ig==}
     engines: {node: '>= 16'}
     hasBin: true
 
@@ -8533,7 +8540,7 @@ snapshots:
       '@vercel/static-config': 3.0.0
       ts-morph: 12.0.0
 
-  '@vercel/next@4.2.13':
+  '@vercel/next@4.2.14':
     dependencies:
       '@vercel/nft': 0.27.0
     transitivePeerDependencies:
@@ -12909,6 +12916,8 @@ snapshots:
 
   uuid@9.0.1: {}
 
+  uuidv7@1.0.0: {}
+
   v8-compile-cache-lib@3.0.1: {}
 
   validate-npm-package-license@3.0.4:
@@ -12918,13 +12927,13 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vercel@34.2.2:
+  vercel@34.2.3:
     dependencies:
       '@vercel/build-utils': 8.2.0
       '@vercel/fun': 1.1.0
       '@vercel/go': 3.1.1
       '@vercel/hydrogen': 1.0.2
-      '@vercel/next': 4.2.13
+      '@vercel/next': 4.2.14
       '@vercel/node': 3.1.5
       '@vercel/python': 4.2.0
       '@vercel/redwood': 2.0.9
