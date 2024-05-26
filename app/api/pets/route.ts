@@ -34,17 +34,25 @@ export async function POST(request: Request) {
         );
     }
 
-    const { name, breed, age } = await request.json();
-    const newPet = await prisma.pet.create({
-        data: {
-            name,
-            breed,
-            age: parseInt(age, 10),
-            owners: {
-                connect: { id: session?.user?.id },
+    try {
+        const { name, breed, age } = await request.json();
+        const newPet = await prisma.pet.create({
+            data: {
+                name,
+                breed,
+                age: parseInt(age, 10),
+                owners: {
+                    connect: { id: session?.user?.id },
+                },
             },
-        },
-    });
+        });
 
-    return NextResponse.json(newPet, { status: 201 });
+        return NextResponse.json(newPet, { status: 201 });
+    } catch (error) {
+        console.error("Error adding pet:", error);
+        return NextResponse.json(
+            { error: "Failed to add pet" },
+            { status: 500 }
+        );
+    }
 }
