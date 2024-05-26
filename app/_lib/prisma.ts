@@ -5,7 +5,7 @@ let prisma: PrismaClient;
 declare global {
     // Prevent multiple instances of Prisma Client in development
     // See: https://www.prisma.io/docs/support/help-articles/nextjs-prisma-client-dev-practices#problem
-    var prisma: PrismaClient | undefined;
+    var prisma: any;
 }
 
 if (process.env.NODE_ENV === "production") {

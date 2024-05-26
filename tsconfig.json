@@ -4,6 +4,7 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "target": "es2022",
+        "allowImportingTsExtensions": true,
         "allowJs": true,
         "resolveJsonModule": true,
         "moduleDetection": "force",
@@ -14,11 +15,24 @@
         "noUncheckedIndexedAccess": true,
         "noImplicitOverride": true,
         /* If transpiling with TypeScript: */
-        "module": "NodeNext",
+        "module": "ESNext",
         "outDir": "dist",
         "sourceMap": true,
         /* If your code runs in the DOM: */
-        "lib": ["es2022", "dom", "dom.iterable"]
+        "lib": ["es2022", "dom", "dom.iterable"],
+        "noEmit": true,
+        "incremental": true,
+        "moduleResolution": "bundler",
+        "jsx": "preserve",
+        "plugins": [
+            {
+                "name": "next"
+            }
+        ],
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./*"]
+        }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
     "exclude": ["node_modules"]
