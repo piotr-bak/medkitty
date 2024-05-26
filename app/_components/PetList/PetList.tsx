@@ -2,6 +2,7 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import type { Pet } from "@/app/_types";
+import styles from './petlist.module.scss';
 
 export function PetList() {
     const { data: session, status } = useSession();
@@ -18,21 +19,21 @@ export function PetList() {
     }, [] );
 
     return (
-        <div>
+        <div className={styles.board}>
             {status === 'loading' && <p>loading data...</p>}
             {( status !== 'loading' && pets ) && (
-                <ul>
+                <ul className={styles.list}>
                     {pets.map( pet => {
                         return (
-                            <li key={pet.id}>
+                            <li key={pet.id} className={styles.item}>
                                 <p>{pet.name}</p>
-                                <button aria-label="see more">{'->'}</button>
+                                <button className={styles.buttonDetails} aria-label="see more">{'->'}</button>
                             </li>
                         )
                     } )}
                 </ul>
             )}
-            <button aria-label="add pet">{'+'}</button>
+            <button className={styles.buttonAdd} aria-label="add pet">{'+'}</button>
         </div>
     )
 }

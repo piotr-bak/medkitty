@@ -1,0 +1,30 @@
+.board {
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+}
+
+.list {
+    list-style: none;
+    min-height: 250px;
+}
+
+.item {
+    display: flex;
+    flex-direction: row;
+    width: 500px;
+    justify-content: space-between;
+}
+
+.buttonDetails {
+    width: 50px;
+    height: 25px;
+}
+
+.buttonAdd {
+    justify-self: flex-end;
+    align-self: flex-end;
+    width: 45px;
+    height: 45px;
+    border-radius: 50px;
+}
