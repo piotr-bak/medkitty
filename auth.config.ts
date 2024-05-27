@@ -17,7 +17,7 @@ export const authConfig = {
             }
             return true;
         },
-        async session({ session, user, token }) {
+        async session({ session, token }) {
             if (session.user) {
                 session.user.id = token.id as string;
             }
@@ -25,7 +25,7 @@ export const authConfig = {
         },
         async jwt({ token, user }) {
             if (user) {
-                token.id = user.id;
+                token.id = user.id as string;
             }
             return token;
         },
