@@ -1,26 +1,31 @@
 'use client'
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import type { Pet, ShowPetList } from "@/app/_types";
+import type { Pet } from "@/app/_types";
 import styles from './petlist.module.scss';
 
-interface PetListProps extends ShowPetList {
-    refreshPets: boolean;
-}
-
-export function PetList( { showDetailsScreen, refreshPets }: PetListProps ) {
+export function PetList() {
     const { data: session, status } = useSession();
     const [pets, setPets] = useState<Pet[]>( [] );
 
     useEffect( () => {
         const fetchPets = async () => {
-            const response = await fetch( "/api/pets" );
-            const data = await response.json();
-            setPets( data );
-        };
+            try {
+                const response = await fetch( "/api/pets" );
 
+                // Check if the response is OK (status code 200-299)
+                if ( !response.ok ) {
+                    throw new Error( `HTTP error! status: ${response.status}` );
+                }
+
+                const data = await response.json();
+                setPets( data );
+            } catch ( error ) {
+                console.error( "Failed to fetch pets:", error );
+            }
+        };
         fetchPets();
-    }, [refreshPets] );
+    }, [] );
 
     return (
         <div className={styles.board}>
@@ -37,7 +42,7 @@ export function PetList( { showDetailsScreen, refreshPets }: PetListProps ) {
                     } )}
                 </ul>
             )}
-            <button className={styles.buttonAdd} aria-label="add pet" onClick={showDetailsScreen}>{'+'}</button>
+            <button className={styles.buttonAdd} aria-label="add pet" onClick={() => { }}>{'+'}</button>
         </div>
     )
 }

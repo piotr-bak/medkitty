@@ -1,2 +1,2 @@
 export * from "./Pet";
-export * from "./PetList";
+export * from "./PetListProps";

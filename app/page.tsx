@@ -1,4 +1,4 @@
-import { AuthButton } from "./_components/SignInOutButtons/AuthButton";
+import { AuthButton } from "./_components/AuthButton/AuthButton";
 import styles from "./page.module.css";
 
 export default function Home() {

@@ -1,4 +1,4 @@
-import { AuthButton } from "../SignInOutButtons/AuthButton";
+import { AuthButton } from "../AuthButton/AuthButton";
 import { UserInfo } from "../UserInfo/UserInfo";
 import styles from './navbar.module.scss';
 export function Navbar() {
