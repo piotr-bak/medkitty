@@ -9,10 +9,3 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     ...authConfig,
     adapter,
 });
-
-export async function validateSession(
-    session: Session | null
-): Promise<boolean> {
-    if (!session) return false;
-    return typeof session?.user?.id !== "string";
-}
