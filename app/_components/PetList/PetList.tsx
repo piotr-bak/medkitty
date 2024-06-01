@@ -37,9 +37,6 @@ export function PetList() {
                     )
                 } )}
             </ul>
-            <Link href={'/dashboard/pet'}>
-                <button className={styles.buttonAdd} aria-label="add pet">{'+'}</button>
-            </Link>
         </div >
     )
 }

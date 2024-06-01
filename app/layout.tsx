@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "@/app/styles/globals.scss";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 const inter = Inter( { subsets: ["latin"] } );

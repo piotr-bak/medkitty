@@ -1,20 +1,14 @@
 'use client'
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "next/navigation";
 import { addPet, updatePet } from "@/app/_utils/petService";
-import Link from "next/link";
 import type { SubmitHandler } from "react-hook-form";
 import type { Pet } from '@/app/_types';
 import styles from './petdetails.module.scss';
 
 
-export function PetDetails() {
+export function PetDetails( { petId }: { petId: string | null } ) {
     const [currentPet, setCurrentPet] = useState<Pet | undefined>( undefined );
-
-    const searchParams = useSearchParams();
-    const petId = searchParams.get( 'id' );
-
     const { register, handleSubmit, reset, formState: { errors } } = useForm<Pet>();
 
     useEffect( () => {
@@ -62,9 +56,6 @@ export function PetDetails() {
                 <input className={styles.input} {...register( 'breed', { required: true } )} defaultValue={currentPet?.breed || ''} />
                 <input className={styles.submitButton} type='submit' />
             </form>
-            <Link href={'/dashboard'}>
-                <button>go back</button>
-            </Link>
         </>
     )
 }
