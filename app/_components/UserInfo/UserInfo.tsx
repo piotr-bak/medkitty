@@ -1,20 +1,15 @@
-'use client'
-import { useSession } from "next-auth/react";
+import { getSession } from '@auth0/nextjs-auth0';
 
-export function UserInfo() {
-    const { data: session, status } = useSession();
+export async function UserInfo() {
+    const session = await getSession();
 
-    if ( status === 'loading' ) {
-        return <div>loading...</div>
-    }
-
-    if ( !session?.user ) {
-        return <div>not logged in</div>
-    }
+    const user = session?.user;
 
     return (
-        <div>
-            welcome, {session.user.name}
-        </div>
-    )
+        user && (
+            <div>
+                <h5>Welcome, {user.name}</h5>
+            </div>
+        )
+    );
 }

@@ -1,40 +1,53 @@
 'use client'
-import { useState } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import type { Pet as PetDetails, PetListProps } from '@/app/_types';
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useSearchParams } from "next/navigation";
+import { addPet, updatePet } from "@/app/_utils/petService";
+import Link from "next/link";
+import type { SubmitHandler } from "react-hook-form";
+import type { Pet } from '@/app/_types';
 import styles from './petdetails.module.scss';
 
-export function PetDetails( { hideDetails }: PetListProps ) {
-    const [mode, setMode] = useState( 'add' );
 
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors },
-    } = useForm<PetDetails>();
+export function PetDetails() {
+    const [currentPet, setCurrentPet] = useState<Pet | undefined>( undefined );
 
-    const onSubmit: SubmitHandler<PetDetails> = async ( data ) => {
-        try {
-            const response = await fetch( '/api/pets', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify( {
-                    name: data.name,
-                    age: data.age,
-                    breed: data.breed,
-                } )
-            } );
-            if ( response.ok ) {
-                console.log( 'Pet added successfully!' );
+    const searchParams = useSearchParams();
+    const petId = searchParams.get( 'id' );
+
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<Pet>();
+
+    useEffect( () => {
+        const fetchPet = async () => {
+            if ( petId != null ) {
+                try {
+                    const response = await fetch( `${process.env.NEXT_PUBLIC_APP_URL}/api/${petId && `pets?id=${petId}`}` );
+                    if ( !response.ok ) {
+                        throw new Error( `HTTP error! status: ${response.status}` );
+                    }
+                    const data = await response.json();
+                    setCurrentPet( data );
+                } catch ( error ) {
+                    console.error( "Failed to fetch pets:", error );
+                }
             } else {
-                console.error( 'Failed to add pet:', response.statusText );
+                setCurrentPet( undefined );
             }
+        };
+        fetchPet();
+    }, [petId] );
 
-        } catch ( error ) {
-            console.error( 'Error adding pet:', error );
+    useEffect( () => {
+        if ( currentPet ) {
+            reset( currentPet );
+        }
+    }, [currentPet, reset] )
+
+    const onSubmit: SubmitHandler<Pet> = async ( data ) => {
+        if ( petId ) {
+            updatePet( data );
+        } else {
+            addPet( data );
         }
     }
 
@@ -42,14 +55,16 @@ export function PetDetails( { hideDetails }: PetListProps ) {
         <>
             <form className={styles.form} onSubmit={handleSubmit( onSubmit )}>
                 <label>name</label>
-                <input className={styles.input} {...register( 'name', { required: true } )} />
+                <input className={styles.input} {...register( 'name', { required: true } )} defaultValue={currentPet?.name || ''} />
                 <label>age</label>
-                <input className={styles.input} {...register( 'age', { required: true } )} />
+                <input className={styles.input} {...register( 'age', { required: true } )} defaultValue={currentPet?.age || ''} />
                 <label>breed</label>
-                <input className={styles.input} {...register( 'breed', { required: true } )} />
+                <input className={styles.input} {...register( 'breed', { required: true } )} defaultValue={currentPet?.breed || ''} />
                 <input className={styles.submitButton} type='submit' />
             </form>
-            <button onClick={() => { }}>cancel</button>
+            <Link href={'/dashboard'}>
+                <button>go back</button>
+            </Link>
         </>
     )
 }
