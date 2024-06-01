@@ -1,6 +1,6 @@
 @import 'variables';
 
-// Media query
+//Media query
 @mixin breakpoint($name) {
     @if not map-has-key($breakpoints, $name) {
         @warn "Warning: `#{$name}` is not a valid breakpoint name.";
@@ -12,7 +12,7 @@
     }
 }
 
-// Flexbox utilities
+//Flexbox utilities
 @mixin flex-center {
     display: flex;
     justify-content: center;
