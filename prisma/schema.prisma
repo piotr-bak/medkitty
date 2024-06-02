@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -33,6 +27,7 @@ model User {
   ownedPets      Pet[]           @relation("OwnerPets")
   caretakenPets  Pet[]           @relation("CaretakerPets")
   petInvitations PetInvitation[]
+  medicationPlan DailyDose[]     @relation("UserMedications")
 }
 
 model PetInvitation {
@@ -45,19 +40,18 @@ model PetInvitation {
 }
 
 model Pet {
-  id                  String                   @id @default(uuid())
-  name                String
-  species             String
-  breed               String
-  sex                 Sex
-  owners              User[]                   @relation("OwnerPets")
-  caretakers          User[]                   @relation("CaretakerPets")
-  medicationSchedules MedicationScheduleItem[]
-  invitations         PetInvitation[]
-  dailyDoses          DailyDose[]
+  id          String      @id @default(uuid())
+  name        String
+  species     String
+  breed       String
+  sex         Sex
+  owners      User[]      @relation("OwnerPets")
+  caretakers  User[]      @relation("CaretakerPets")
+  dailyDoses  DailyDose[]
+  invitations PetInvitation[]
 }
 
-model Medicine {
+model Medication {
   id         String      @id @default(uuid())
   name       String
   totalDoses Int
@@ -66,27 +60,21 @@ model Medicine {
 }
 
 model DailyDose {
-  id                  String                   @id @default(uuid())
-  petId               String
-  medicineId          String
-  dosage              Float
-  intervalMinutes     Int
-  firstAdministration DateTime?
-  administeredCount   Int                      @default(0)
-  finalAdministration DateTime?
-  pet                 Pet                      @relation(fields: [petId], references: [id])
-  medicine            Medicine                 @relation(fields: [medicineId], references: [id])
-  medicationSchedules MedicationScheduleItem[]
-}
-
-model MedicationScheduleItem {
-  id                  String     @id @default(uuid())
-  petId               String
-  dailyDoseId         String
-  administrationTimes DateTime[]
-  administeredTimes   DateTime[]
-  pet                 Pet        @relation(fields: [petId], references: [id])
-  dailyDose           DailyDose  @relation(fields: [dailyDoseId], references: [id])
+  id                      String     @id @default(uuid())
+  petId                   String
+  userId                  String
+  medicationId            String
+  dosage                  Float
+  intervalMinutes         Int
+  firstAdministration     DateTime?
+  finalAdministration     DateTime?
+  mostRecentAdministration DateTime?
+  nextAdministration      DateTime?
+  cumulativeAdjustment    Int        @default(0) // in minutes
+  administeredCount       Int        @default(0)
+  pet                     Pet        @relation(fields: [petId], references: [id])
+  user                    User       @relation(fields: [userId], references: [id], name: "UserMedications")
+  medication              Medication @relation(fields: [medicationId], references: [id])
 }
 
 enum InvitationStatus {
