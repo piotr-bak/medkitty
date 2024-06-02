@@ -70,7 +70,7 @@ model DailyDose {
   finalAdministration     DateTime?
   mostRecentAdministration DateTime?
   nextAdministration      DateTime?
-  cumulativeAdjustment    Int        @default(0) // in minutes
+  cumulativeAdjustment    Int        @default(0) // in minutes, to optionally adjust for doses administered too late/too early
   administeredCount       Int        @default(0)
   pet                     Pet        @relation(fields: [petId], references: [id])
   user                    User       @relation(fields: [userId], references: [id], name: "UserMedications")
