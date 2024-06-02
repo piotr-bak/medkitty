@@ -19,27 +19,13 @@ export default function Page() {
             }}
         >
             <SwiperSlide className={styles.panel}>
-                <Swiper
-                    className={styles.swiper}
-                    direction={'vertical'}
-                    modules={[Pagination]}
-                    spaceBetween={25}
-                    pagination={{
-                        clickable: true,
-                    }}
-                >
-                    <SwiperSlide className={styles.panel}>
-                        Summary
-                    </SwiperSlide>
-                    <SwiperSlide className={styles.panel}>
-                        <section>
-                            <PetList />
-                            <Link href={'/dashboard/pet'}>
-                                <button className={styles.buttonAdd} aria-label="add pet">{'+'}</button>
-                            </Link>
-                        </section>
-                    </SwiperSlide>
-                </Swiper>
+                <h2>Summary</h2>
+                <section>
+                    <PetList />
+                    <Link href={'/dashboard/pet'}>
+                        <button className={styles.buttonAdd} aria-label="add pet">{'+'}</button>
+                    </Link>
+                </section>
             </SwiperSlide>
             <SwiperSlide className={styles.panel}>
                 Admin
