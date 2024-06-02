@@ -1,5 +1,5 @@
 import { UserInfo } from "../UserInfo/UserInfo";
-import styles from './navbar.module.scss';
+import styles from './Navbar.module.scss';
 export function Navbar() {
     return (
         <nav className={styles.navbar}>

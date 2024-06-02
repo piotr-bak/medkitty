@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Pet } from "@/app/_types";
-import styles from './petlist.module.scss';
+import styles from './PetList.module.scss';
 
 export function PetList() {
     const [pets, setPets] = useState<Pet[]>( [] );

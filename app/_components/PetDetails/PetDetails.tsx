@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { addPet, updatePet } from "@/app/_utils/petService";
 import type { SubmitHandler } from "react-hook-form";
 import type { Pet } from '@/app/_types';
-import styles from './petdetails.module.scss';
+import styles from './PetDetails.module.scss';
 
 
 export function PetDetails( { petId }: { petId: string | null } ) {
