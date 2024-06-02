@@ -9,8 +9,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
@@ -19,60 +19,74 @@ model VerificationToken {
   identifier String
   token      String   @unique
   expires    DateTime
+
   @@unique([identifier, token])
 }
 
 model User {
-  id               String              @id @default(uuid())
-  foreignId        String              @unique
-  name             String?
-  email            String              @unique
-  createdAt        DateTime            @default(now())
-  updatedAt        DateTime            @updatedAt
-  ownedPets        Pet[]               @relation("OwnerPets")
-  caretakenPets    Pet[]               @relation("CaretakerPets")
-  petInvitations   PetInvitation[]
-}
-
-model Pet {
-  id               String              @id @default(uuid())
-  name             String
-  breed            String
-  age              Int
-  owners           User[]              @relation("OwnerPets")
-  caretakers       User[]              @relation("CaretakerPets")
-  medicationSchedules MedicationSchedule[]
-  invitations      PetInvitation[]
+  id             String          @id @default(uuid())
+  foreignId      String          @unique
+  name           String?
+  email          String          @unique
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  ownedPets      Pet[]           @relation("OwnerPets")
+  caretakenPets  Pet[]           @relation("CaretakerPets")
+  petInvitations PetInvitation[]
 }
 
 model PetInvitation {
-  id               String              @id @default(uuid())
-  petId            String
-  userId           String
-  status           InvitationStatus    @default(PENDING)
-  pet              Pet                 @relation(fields: [petId], references: [id])
-  user             User                @relation(fields: [userId], references: [id])
+  id     String           @id @default(uuid())
+  petId  String
+  userId String
+  status InvitationStatus @default(PENDING)
+  pet    Pet              @relation(fields: [petId], references: [id])
+  user   User             @relation(fields: [userId], references: [id])
+}
+
+model Pet {
+  id                  String                   @id @default(uuid())
+  name                String
+  species             String
+  breed               String
+  sex                 Sex
+  owners              User[]                   @relation("OwnerPets")
+  caretakers          User[]                   @relation("CaretakerPets")
+  medicationSchedules MedicationScheduleItem[]
+  invitations         PetInvitation[]
+  DailyDose           DailyDose[]
 }
 
 model Medicine {
-  id                  String             @id @default(uuid())
-  name                String
-  packagingDoses      Int
-  packagingUnit       String
-  medicationSchedules MedicationSchedule[]
+  id         String      @id @default(uuid())
+  name       String
+  totalDoses Int
+  doseUnit   String
+  dailyDoses DailyDose[]
 }
 
-model MedicationSchedule {
-  id                 String       @id @default(uuid())
-  petId              String
-  medicineId         String
-  dosage             Float
-  intervalMinutes    Int
-  lastAdministered   DateTime
-  nextAdministration DateTime
-  administeredCount  Int
-  pet                Pet          @relation(fields: [petId], references: [id])
-  medicine           Medicine     @relation(fields: [medicineId], references: [id])
+model DailyDose {
+  id                  String                   @id @default(uuid())
+  petId               String
+  medicineId          String
+  dosage              Float
+  intervalMinutes     Int
+  firstAdministration DateTime?
+  administeredCount   Int                      @default(0)
+  finalAdministration DateTime?
+  pet                 Pet                      @relation(fields: [petId], references: [id])
+  medicine            Medicine                 @relation(fields: [medicineId], references: [id])
+  medicationSchedules MedicationScheduleItem[]
+}
+
+model MedicationScheduleItem {
+  id                  String     @id @default(uuid())
+  petId               String
+  dailyDoseId         String
+  administrationTimes DateTime[]
+  administeredTimes   DateTime[]
+  pet                 Pet        @relation(fields: [petId], references: [id])
+  dailyDose           DailyDose  @relation(fields: [dailyDoseId], references: [id])
 }
 
 enum InvitationStatus {
@@ -81,3 +95,7 @@ enum InvitationStatus {
   REJECTED
 }
 
+enum Sex {
+  FEMALE
+  MALE
+}
