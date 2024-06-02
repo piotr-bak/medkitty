@@ -7,11 +7,7 @@ export async function addPet(data: Pet) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                name: data.name,
-                age: data.age,
-                breed: data.breed,
-            }),
+            body: JSON.stringify(data),
         });
         if (response.ok) {
             console.log("Pet added successfully!");
@@ -31,12 +27,7 @@ export async function updatePet(data: Pet) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                id: data.id,
-                name: data.name,
-                age: data.age,
-                breed: data.breed,
-            }),
+            body: JSON.stringify(data),
         });
         if (response.ok) {
             console.log("Pet updated successfully!");
