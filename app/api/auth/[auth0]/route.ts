@@ -10,6 +10,7 @@ async function afterCallback(
 ) {
     const auth0UserId = session.user.sub;
     const userName = session.user.name;
+    const userEmail = session.user.email ? session.user.email : null;
 
     let userAlreadyExists = await prisma.user.findUnique({
         where: {
@@ -22,6 +23,7 @@ async function afterCallback(
             data: {
                 foreignId: auth0UserId,
                 name: userName,
+                email: userEmail,
             },
         });
     }

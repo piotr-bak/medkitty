@@ -14,15 +14,6 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-model User {
-  id            String     @id @default(uuid())
-  foreignId     String     @unique
-  name          String?
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  pets          Pet[]      @relation("UserPets")
-}
-
 model VerificationToken {
   id         String   @id @default(uuid())
   identifier String
@@ -31,13 +22,36 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model User {
+  id               String              @id @default(uuid())
+  foreignId        String              @unique
+  name             String?
+  email            String              @unique
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  ownedPets        Pet[]               @relation("OwnerPets")
+  caretakenPets    Pet[]               @relation("CaretakerPets")
+  petInvitations   PetInvitation[]
+}
+
 model Pet {
-  id                 String             @id @default(uuid())
-  name               String
-  breed              String
-  age                Int
-  owners             User[]             @relation("UserPets")
+  id               String              @id @default(uuid())
+  name             String
+  breed            String
+  age              Int
+  owners           User[]              @relation("OwnerPets")
+  caretakers       User[]              @relation("CaretakerPets")
   medicationSchedules MedicationSchedule[]
+  invitations      PetInvitation[]
+}
+
+model PetInvitation {
+  id               String              @id @default(uuid())
+  petId            String
+  userId           String
+  status           InvitationStatus    @default(PENDING)
+  pet              Pet                 @relation(fields: [petId], references: [id])
+  user             User                @relation(fields: [userId], references: [id])
 }
 
 model Medicine {
@@ -60,3 +74,10 @@ model MedicationSchedule {
   pet                Pet          @relation(fields: [petId], references: [id])
   medicine           Medicine     @relation(fields: [medicineId], references: [id])
 }
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+

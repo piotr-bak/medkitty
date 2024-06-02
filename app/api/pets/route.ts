@@ -25,11 +25,22 @@ export async function GET(request: Request) {
             const pet = await prisma.pet.findFirst({
                 where: {
                     id: petId,
-                    owners: {
-                        some: {
-                            id: user.id,
+                    OR: [
+                        {
+                            owners: {
+                                some: {
+                                    id: user.id,
+                                },
+                            },
                         },
-                    },
+                        {
+                            caretakers: {
+                                some: {
+                                    id: user.id,
+                                },
+                            },
+                        },
+                    ],
                 },
             });
 
@@ -43,11 +54,22 @@ export async function GET(request: Request) {
         } else if (!petId) {
             const pets = await prisma.pet.findMany({
                 where: {
-                    owners: {
-                        some: {
-                            id: user.id,
+                    OR: [
+                        {
+                            owners: {
+                                some: {
+                                    id: user.id,
+                                },
+                            },
                         },
-                    },
+                        {
+                            caretakers: {
+                                some: {
+                                    id: user.id,
+                                },
+                            },
+                        },
+                    ],
                 },
             });
 
