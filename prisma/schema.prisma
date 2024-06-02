@@ -54,7 +54,7 @@ model Pet {
   caretakers          User[]                   @relation("CaretakerPets")
   medicationSchedules MedicationScheduleItem[]
   invitations         PetInvitation[]
-  DailyDose           DailyDose[]
+  dailyDoses          DailyDose[]
 }
 
 model Medicine {
