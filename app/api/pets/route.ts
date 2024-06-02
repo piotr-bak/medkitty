@@ -91,7 +91,7 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     try {
-        const { name, breed, age } = await request.json();
+        const { name, species, breed, sex } = await request.json();
         const user = await prisma.user.findUnique({
             where: {
                 foreignId: session.user.sub,
@@ -108,8 +108,9 @@ export async function POST(request: Request) {
         const newPet = await prisma.pet.create({
             data: {
                 name,
+                species,
                 breed,
-                age: parseInt(age, 10),
+                sex,
                 owners: {
                     connect: { id: user.id },
                 },
@@ -132,7 +133,7 @@ export async function PUT(request: Request) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     try {
-        const { id: petId, name, breed, age } = await request.json();
+        const { id: petId, name, species, breed, sex } = await request.json();
         const user = await prisma.user.findUnique({
             where: {
                 foreignId: session.user.sub,
@@ -170,8 +171,9 @@ export async function PUT(request: Request) {
             },
             data: {
                 name,
+                species,
                 breed,
-                age: parseInt(age, 10),
+                sex,
             },
         });
 

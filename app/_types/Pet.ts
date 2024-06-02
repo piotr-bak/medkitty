@@ -1,8 +1,9 @@
 export interface Pet {
     id: string;
     name: string;
+    species: string;
     breed: string;
-    age: number;
+    sex: "female" | "male";
     owners: string[];
     medicationSchedules: string[];
 }

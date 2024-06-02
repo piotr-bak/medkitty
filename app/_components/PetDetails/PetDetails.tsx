@@ -50,10 +50,15 @@ export function PetDetails( { petId }: { petId: string | null } ) {
             <form className={styles.form} onSubmit={handleSubmit( onSubmit )}>
                 <label>name</label>
                 <input className={styles.input} {...register( 'name', { required: true } )} defaultValue={currentPet?.name || ''} />
-                <label>age</label>
-                <input className={styles.input} {...register( 'age', { required: true } )} defaultValue={currentPet?.age || ''} />
+                <label>species</label>
+                <input className={styles.input} {...register( 'species', { required: true } )} defaultValue={currentPet?.species || ''} />
                 <label>breed</label>
                 <input className={styles.input} {...register( 'breed', { required: true } )} defaultValue={currentPet?.breed || ''} />
+                <label>sex</label>
+                <select className={styles.input} {...register( 'sex', { required: true } )} defaultValue={currentPet?.sex}>
+                    <option value='female'>female</option>
+                    <option value='male'>male</option>
+                </select>
                 <input className={styles.submitButton} type='submit' />
             </form>
         </>
