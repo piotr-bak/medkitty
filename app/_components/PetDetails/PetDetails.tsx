@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { addPet, updatePet } from "@/app/_utils/petService";
 import type { SubmitHandler } from "react-hook-form";
 import type { Pet } from '@/app/_types';
+import { AnimalSex } from "@/app/_types";
 import styles from './PetDetails.module.scss';
 
 
@@ -56,8 +57,8 @@ export function PetDetails( { petId }: { petId: string | null } ) {
                 <input className={styles.input} {...register( 'breed', { required: true } )} defaultValue={currentPet?.breed || ''} />
                 <label>sex</label>
                 <select className={styles.input} {...register( 'sex', { required: true } )} defaultValue={currentPet?.sex}>
-                    <option value='female'>female</option>
-                    <option value='male'>male</option>
+                    <option value={AnimalSex.FEMALE}>female</option>
+                    <option value={AnimalSex.MALE}>male</option>
                 </select>
                 <input className={styles.submitButton} type='submit' />
             </form>
