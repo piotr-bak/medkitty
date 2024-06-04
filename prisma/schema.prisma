@@ -18,16 +18,17 @@ model VerificationToken {
 }
 
 model User {
-  id             String          @id @default(uuid())
-  foreignId      String          @unique
-  name           String?
-  email          String          @unique
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  ownedPets      Pet[]           @relation("OwnerPets")
-  caretakenPets  Pet[]           @relation("CaretakerPets")
-  petInvitations PetInvitation[]
-  medicationPlan DailyDose[]     @relation("UserMedications")
+  id                    String          @id @default(uuid())
+  foreignId             String          @unique
+  name                  String?
+  email                 String          @unique
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  ownedPets             Pet[]           @relation("OwnerPets")
+  caretakenPets         Pet[]           @relation("CaretakerPets")
+  petInvitations        PetInvitation[]
+  medicationPlan        DailyDose[]     @relation("UserMedications")
+  availableMedications  Medication[]    @relation("UserMedicationsLibrary")
 }
 
 model PetInvitation {
@@ -57,6 +58,8 @@ model Medication {
   totalDoses Int
   doseUnit   String
   dailyDoses DailyDose[]
+  user       User        @relation(fields: [userId], references: [id], name: "UserMedicationsLibrary")
+  userId     String
 }
 
 model DailyDose {

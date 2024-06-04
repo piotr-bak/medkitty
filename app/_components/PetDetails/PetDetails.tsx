@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { addPet, updatePet } from "@/app/_utils/petService";
+import { addPet, updatePet } from "@/app/_lib/utils/petService";
 import type { SubmitHandler } from "react-hook-form";
 import type { Pet } from '@/app/_types';
 import { AnimalSex } from "@/app/_types";
