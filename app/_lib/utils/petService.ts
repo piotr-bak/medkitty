@@ -1,4 +1,4 @@
-import type { Pet } from "../_types";
+import type { Pet } from "../../_types";
 
 export async function addPet(data: Pet) {
     try {
