@@ -6,6 +6,7 @@ import styles from './page.module.scss';
 import { useModal } from "@/app/_lib/hooks/useModal";
 import { Modal } from "@/app/_components/Modal/Modal";
 import { PlanForm } from "@/app/_components/PlanForm/PlanForm";
+import { PlanView } from "@/app/_components/PlanView/PlanView";
 
 
 export default function Page() {
@@ -23,6 +24,7 @@ export default function Page() {
             </section>
             <section>
                 <PlanForm />
+                <PlanView />
             </section>
             {/* <Modal ref={ref} onClose={onClose} /> */}
         </main>
