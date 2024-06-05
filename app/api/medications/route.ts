@@ -92,7 +92,8 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     try {
-        const { name, totalDoses, doseUnit } = await request.json();
+        const { name, totalDoses, doseUnit, visualDescription } =
+            await request.json();
         const user = await prisma.user.findUnique({
             where: {
                 foreignId: session.user.sub,
@@ -120,6 +121,7 @@ export async function POST(request: Request) {
                 name,
                 totalDoses: totalDosesNumber,
                 doseUnit,
+                visualDescription,
                 userId: user.id,
             },
         });

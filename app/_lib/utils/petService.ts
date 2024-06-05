@@ -8,7 +8,7 @@ export async function addPet(data: Pet) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
-        });
+        } );
         if (response.ok) {
             console.log("Pet added successfully!");
         } else {
