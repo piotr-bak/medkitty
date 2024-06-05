@@ -18,17 +18,88 @@ model VerificationToken {
 }
 
 model User {
-  id                    String          @id @default(uuid())
-  foreignId             String          @unique
-  name                  String?
-  email                 String          @unique
-  createdAt             DateTime        @default(now())
-  updatedAt             DateTime        @updatedAt
-  ownedPets             Pet[]           @relation("OwnerPets")
-  caretakenPets         Pet[]           @relation("CaretakerPets")
-  petInvitations        PetInvitation[]
-  medicationPlan        DailyDose[]     @relation("UserMedications")
-  availableMedications  Medication[]    @relation("UserMedicationsLibrary")
+  id                   String           @id @default(uuid())
+  foreignId            String           @unique
+  name                 String?
+  email                String           @unique
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+  ownedPets            Pet[]            @relation("OwnerPets")
+  caretakenPets        Pet[]            @relation("CaretakerPets")
+  petInvitations       PetInvitation[]
+  medicationPlans      MedicationPlan[]
+  availableMedications Medication[]     @relation("UserMedicationsLibrary")
+}
+
+model Pet {
+  id              String           @id @default(uuid())
+  name            String
+  species         String
+  breed           String
+  sex             String
+  owners          User[]           @relation("OwnerPets")
+  caretakers      User[]           @relation("CaretakerPets")
+  invitations     PetInvitation[]
+  medicationPlans MedicationPlan[]
+}
+
+model MedicationPlan {
+  id        String   @id @default(uuid())
+  petId     String
+  userId    String
+  name      String
+  startDate DateTime
+  endDate   DateTime
+  user      User     @relation(fields: [userId], references: [id])
+  pet       Pet      @relation(fields: [petId], references: [id])
+  days      Day[]    @relation("MedicationPlanDays")
+}
+
+model Day {
+  id               String         @id @default(uuid())
+  medicationPlanId String
+  date             DateTime
+  medicationPlan   MedicationPlan @relation(name: "MedicationPlanDays", fields: [medicationPlanId], references: [id])
+  doses            Dose[]
+}
+
+model Dose {
+  id                   String             @id @default(uuid())
+  dayId                String
+  offset               Int // in minutes from midnight
+  medicationId         String
+  cumulativeAdjustment Int                @default(0) // in minutes, to optionally adjust for doses administered too late/too early
+  status               DoseStatus         @default(PENDING)
+  day                  Day                @relation(fields: [dayId], references: [id])
+  medication           Medication         @relation(fields: [medicationId], references: [id])
+  administeredDoses    AdministeredDose[]
+}
+
+enum DoseStatus {
+  PENDING
+  ADMINISTERED
+  SKIPPED //As administered, but without increasing administered dose count
+}
+
+model Medication {
+  id                String             @id @default(uuid())
+  name              String
+  totalDoses        Int
+  doseUnit          String
+  userId            String
+  visualDescription String?            // Optional visual description of the medication
+  user              User               @relation(fields: [userId], references: [id], name: "UserMedicationsLibrary")
+  doses             Dose[]
+  administeredDoses AdministeredDose[]
+}
+
+model AdministeredDose {
+  id           String     @id @default(uuid())
+  doseId       String
+  medicationId String
+  time         DateTime
+  dose         Dose       @relation(fields: [doseId], references: [id])
+  medication   Medication @relation(fields: [medicationId], references: [id])
 }
 
 model PetInvitation {
@@ -40,53 +111,8 @@ model PetInvitation {
   user   User             @relation(fields: [userId], references: [id])
 }
 
-model Pet {
-  id          String      @id @default(uuid())
-  name        String
-  species     String
-  breed       String
-  sex         Sex
-  owners      User[]      @relation("OwnerPets")
-  caretakers  User[]      @relation("CaretakerPets")
-  dailyDoses  DailyDose[]
-  invitations PetInvitation[]
-}
-
-model Medication {
-  id         String      @id @default(uuid())
-  name       String
-  totalDoses Int
-  doseUnit   String
-  dailyDoses DailyDose[]
-  user       User        @relation(fields: [userId], references: [id], name: "UserMedicationsLibrary")
-  userId     String
-}
-
-model DailyDose {
-  id                      String     @id @default(uuid())
-  petId                   String
-  userId                  String
-  medicationId            String
-  dosage                  Float
-  intervalMinutes         Int
-  firstAdministration     DateTime?
-  finalAdministration     DateTime?
-  mostRecentAdministration DateTime?
-  nextAdministration      DateTime?
-  cumulativeAdjustment    Int        @default(0) // in minutes, to optionally adjust for doses administered too late/too early
-  administeredCount       Int        @default(0)
-  pet                     Pet        @relation(fields: [petId], references: [id])
-  user                    User       @relation(fields: [userId], references: [id], name: "UserMedications")
-  medication              Medication @relation(fields: [medicationId], references: [id])
-}
-
 enum InvitationStatus {
   PENDING
   ACCEPTED
   REJECTED
-}
-
-enum Sex {
-  FEMALE
-  MALE
 }
