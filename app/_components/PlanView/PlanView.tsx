@@ -13,13 +13,13 @@ import type { SyntheticEvent } from 'react';
 
 export function PlanView( { data }: { data: MedicationPlan | null | undefined } ) {
     //const petId = useSearchParams().get( 'id' );
-    const [value, setValue] = useState( 0 );
+    const [value, setValue] = useState( "0" );
 
     // if ( isLoading ) return <div>loading data</div>
 
     // if ( isError ) return <div>error loading data</div>
 
-    const handleChange = ( event: SyntheticEvent, newValue: number ) => {
+    const handleChange = ( event: SyntheticEvent, newValue: string ) => {
         setValue( newValue );
     };
 
@@ -30,13 +30,13 @@ export function PlanView( { data }: { data: MedicationPlan | null | undefined } 
                     <TabList onChange={handleChange}>
                         {data.days.map( ( _, index ) => {
                             return (
-                                <Tab label={`day ${index + 1}`} value={index}></Tab>
+                                <Tab label={`day ${index + 1}`} value={String( index )}></Tab>
                             )
                         } )}
                     </TabList>
                     {data.days.map( ( day, index ) => {
                         return (
-                            <TabPanel value={index}>
+                            <TabPanel value={String( index )}>
                                 <div className={styles.panel}>
                                     <p>{`${day.date}`}</p>
                                     {JSON.stringify( day )}
