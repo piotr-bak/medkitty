@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 export default function Page() {
     const petId = useSearchParams().get( 'id' );
     const { data, isLoading, isError } = useFetch<MedicationPlan>( `${process.env.NEXT_PUBLIC_APP_URL}/api/pets/${petId && `plan?id=${petId}`}` )
-    const { ref, onOpen, onClose } = useModal();
 
     useEffect( () => console.log( data ) );
 
@@ -29,7 +28,6 @@ export default function Page() {
             <section className={styles.planSection}>
                 {data ? <PlanView data={data} /> : ( data === null ? <PlanForm /> : undefined )}
             </section>
-            {/* <Modal ref={ref} onClose={onClose} /> */}
         </main>
     )
 }

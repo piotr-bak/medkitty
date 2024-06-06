@@ -1,9 +1,10 @@
 import styles from './DoseForm.module.scss';
 
-export function DoseForm() {
+export function DoseForm( { dayId }: { dayId: string } ) {
     return (
         <>
-            {/* Add component content here */}
+            <h3>add a dose</h3>
+            <p>for a day of id {dayId}</p>
         </>
     )
 }

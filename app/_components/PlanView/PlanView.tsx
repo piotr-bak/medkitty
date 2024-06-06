@@ -7,12 +7,16 @@ import type { MedicationPlan } from '@/app/_types';
 import styles from './PlanView.module.scss';
 import { useEffect, useState } from 'react';
 import type { SyntheticEvent } from 'react';
-import { DayView } from '../DayView/DayView';
+import { DayView } from './DayView/DayView';
+import { Modal } from '../Modal/Modal';
+import { DoseForm } from '../DoseForm/DoseForm';
+import { useModal } from '@/app/_lib/hooks/useModal';
 
 export function PlanView( { data }: { data: MedicationPlan | null | undefined } ) {
     //const petId = useSearchParams().get( 'id' );
     const [value, setValue] = useState( "0" );
     const [activeDayId, setActiveDayId] = useState<string | undefined>( undefined );
+    const { ref, openModal, onClose } = useModal();
 
     useEffect( () => {
         if ( data && data.days.length > 0 ) {
@@ -31,32 +35,38 @@ export function PlanView( { data }: { data: MedicationPlan | null | undefined } 
         if ( activeDayId ) {
             console.log( `Active Day ID: ${activeDayId}` );
         }
+        openModal();
     };
 
     return (
-        <div className={styles.wrapper}>
-            {( data?.days ) &&
-                <>
-                    <p>{data.name}</p>
-                    <TabContext value={value}>
-                        <TabList onChange={handleChange}>
-                            {data.days.map( ( _, index ) => {
+        <>
+            <div className={styles.wrapper}>
+                {( data?.days ) &&
+                    <>
+                        <p>{data.name}</p>
+                        <TabContext value={value}>
+                            <TabList onChange={handleChange}>
+                                {data.days.map( ( _, index ) => {
+                                    return (
+                                        <Tab label={`day ${index + 1}`} value={String( index )}></Tab>
+                                    )
+                                } )}
+                            </TabList>
+                            {data.days.map( ( day, index ) => {
                                 return (
-                                    <Tab label={`day ${index + 1}`} value={String( index )}></Tab>
+                                    <TabPanel value={String( index )}>
+                                        <DayView dayData={day} />
+                                    </TabPanel>
                                 )
                             } )}
-                        </TabList>
-                        {data.days.map( ( day, index ) => {
-                            return (
-                                <TabPanel value={String( index )}>
-                                    <DayView dayData={day} />
-                                </TabPanel>
-                            )
-                        } )}
-                    </TabContext>
-                    <button onClick={handleButtonClick}>add a dose</button>
-                </>
-            }
-        </div>
+                        </TabContext>
+                        <button onClick={handleButtonClick}>add a dose</button>
+                    </>
+                }
+            </div>
+            <Modal ref={ref} onClose={onClose}>
+                <DoseForm dayId={activeDayId ? activeDayId : ''} />
+            </Modal>
+        </>
     )
 }

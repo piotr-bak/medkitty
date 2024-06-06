@@ -2,7 +2,7 @@ import { useRef } from "react";
 
 export function useModal() {
     const ref = useRef<HTMLDialogElement>(null);
-    const onOpen = () => {
+    const openModal = () => {
         if (ref.current) {
             ref.current?.showModal();
             ref.current.classList.add("active");
@@ -15,5 +15,5 @@ export function useModal() {
         }
     };
 
-    return { ref, onOpen, onClose };
+    return { ref, openModal, onClose };
 }
