@@ -6,7 +6,7 @@ interface FetchOptions extends RequestInit {
 }
 
 export function useFetch<T>(url: string, options?: FetchOptions) {
-    const [data, setData] = useState<T | undefined>(undefined);
+    const [data, setData] = useState<T | null | undefined>(undefined);
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -25,6 +25,7 @@ export function useFetch<T>(url: string, options?: FetchOptions) {
                 });
                 if (!response.ok) {
                     const message = `Invalid server response. Error ${response.status}: ${serverErrors.get(response.status)}`;
+                    setData(null);
                     throw new Error(message);
                 } else {
                     const json = await response.json();
