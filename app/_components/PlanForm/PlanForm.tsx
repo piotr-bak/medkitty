@@ -1,5 +1,5 @@
 
-import type { MedicationPlan } from '@/app/_types/API/Schedule/MedicationPlan';
+import type { MedicationPlan } from '@/app/_types/API/Plan/MedicationPlan';
 import styles from './PlanForm.module.scss';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
@@ -8,8 +8,7 @@ import { useSearchParams } from 'next/navigation';
 
 export function PlanForm() {
     const { register, handleSubmit, reset, formState: { errors } } = useForm<MedicationPlan>();
-    const searchParams = useSearchParams();
-    const petId = searchParams.get( 'id' );
+    const petId = useSearchParams().get( 'id' );
 
     const onSubmit: SubmitHandler<MedicationPlan> = async ( data ) => {
         if ( petId ) {
@@ -31,10 +30,13 @@ export function PlanForm() {
         <form onSubmit={handleSubmit( onSubmit )}>
             <label>name</label>
             <input className={styles.input} {...register( 'name', { required: true } )} />
+            <br />
             <label>start date</label>
             <input type='date' className={styles.input} {...register( 'startDate', { required: true } )} />
+            <br />
             <label>end date</label>
             <input type='date' className={styles.input} {...register( 'endDate', { required: true } )} />
+            <br />
             <button type='submit'>create a plan</button>
         </form>
     )

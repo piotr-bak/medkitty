@@ -48,7 +48,7 @@ export async function GET(request: Request) {
                     { status: 404 }
                 );
 
-            return NextResponse.json(medicationPlan.days);
+            return NextResponse.json(medicationPlan);
         }
     } catch (error) {
         console.error(error);

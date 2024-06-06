@@ -1,6 +1,6 @@
 import type { DoseStatus } from "../Enums/DoseStatus";
 import type { Pet } from "../Pet/Pet";
-import type { Day } from "../Schedule/Day";
+import type { Day } from "../Plan/Day";
 import type { User } from "../User/User";
 import type { AdministeredDose } from "./AdministeredDose";
 import type { Medication } from "./Medication";

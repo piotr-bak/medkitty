@@ -1,7 +1,7 @@
 import type { Medication } from "../Medications/Medication";
 import type { Pet } from "../Pet/Pet";
 import type { PetInvitation } from "../Pet/PetInvitation";
-import type { MedicationPlan } from "../Schedule/MedicationPlan";
+import type { MedicationPlan } from "../Plan/MedicationPlan";
 
 export interface User {
     id: string;

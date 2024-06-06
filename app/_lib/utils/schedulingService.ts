@@ -1,4 +1,4 @@
-import type { MedicationPlan } from "@/app/_types/API/Schedule/MedicationPlan";
+import type { MedicationPlan } from "@/app/_types/API/Plan/MedicationPlan";
 
 export async function createPlan(
     petId: string,
