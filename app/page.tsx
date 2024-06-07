@@ -1,10 +1,26 @@
+import Button from '@mui/material/Button';
+import LoginIcon from '@mui/icons-material/Logout';
+import Image from 'next/image';
 import styles from './page.module.scss';
+import logo from './_assets/logo.svg';
+import illustration from './_assets/cat-and-dog.svg';
 
 export default function Page() {
     return (
         <main className={styles.main}>
-            <h1>MedKitty</h1>
-            <a href="/api/auth/login">Login</a>
+            <Image
+                src={logo}
+                alt={'MEDKitty logo'}
+                className={styles.logo}
+            />
+            <Image
+                src={illustration}
+                alt={'cat and dog playing together'}
+                className={styles.illustration}
+            />
+            <a href="/api/auth/login" className={styles.loginButton}>
+                <Button variant='contained' color='info' size="large" endIcon={<LoginIcon />}>Login</Button>
+            </a>
         </main>
     );
 }

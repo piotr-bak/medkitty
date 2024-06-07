@@ -10,14 +10,23 @@ import MedicationIcon from '@mui/icons-material/Medication';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
+import { useRouter } from 'next/navigation';
 
 const actions = [
-    { icon: <AddIcon />, name: 'Pets' },
+    { icon: <AddIcon />, name: 'Add a Pet', href: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/pet` },
     { icon: <MedicationIcon />, name: 'Medications' },
     { icon: <GroupAddIcon />, name: 'Invites' },
 ];
 
 export default function Page() {
+    const router = useRouter();
+
+    const handleActionClick = ( href: string ) => {
+        if ( href ) {
+            router.push( href );
+        }
+    }
+
     return (
         <>
             <section>
@@ -41,6 +50,7 @@ export default function Page() {
                                 key={action.name}
                                 icon={action.icon}
                                 tooltipTitle={action.name}
+                                onClick={() => handleActionClick( action.href as string )}
                             />
                         )
                     } )}
