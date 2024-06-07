@@ -1,13 +1,13 @@
-import { NextResponse } from "next/server";
-import { getSession } from "@auth0/nextjs-auth0";
-import { ONE_DAY_IN_MS } from "@/app/_lib/constants/oneDayInMiliseconds";
-import prisma from "@/app/_lib/prisma";
+import { ONE_DAY_IN_MS } from '@/app/_lib/constants/oneDayInMiliseconds';
+import prisma from '@/app/_lib/prisma';
+import { getSession } from '@auth0/nextjs-auth0';
+import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
     const session = await getSession();
 
     if (!session?.user)
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const user = await prisma.user.findUnique({
         where: {
@@ -16,11 +16,11 @@ export async function GET(request: Request) {
     });
 
     if (!user) {
-        return NextResponse.json({ error: "User not found" }, { status: 404 });
+        return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
     const { searchParams } = new URL(request.url);
-    const petId = searchParams.get("id");
+    const petId = searchParams.get('id');
 
     try {
         if (petId) {
@@ -44,8 +44,8 @@ export async function GET(request: Request) {
 
             if (!medicationPlan)
                 return NextResponse.json(
-                    { error: "Pet not found or no plan created yet" },
-                    { status: 404 }
+                    { error: 'Pet not found or no plan created yet' },
+                    { status: 404 },
                 );
 
             return NextResponse.json(medicationPlan);
@@ -53,8 +53,8 @@ export async function GET(request: Request) {
     } catch (error) {
         console.error(error);
         return NextResponse.json(
-            { error: "Internal Server Error" },
-            { status: 500 }
+            { error: 'Internal Server Error' },
+            { status: 500 },
         );
     }
 }
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
     const session = await getSession();
 
     if (!session?.user)
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     try {
         const { name, startDate, endDate } = await request.json();
@@ -76,21 +76,21 @@ export async function POST(request: Request) {
 
         if (!user) {
             return NextResponse.json(
-                { error: "User not found" },
-                { status: 404 }
+                { error: 'User not found' },
+                { status: 404 },
             );
         }
 
         const planDuration = Math.ceil(
             (new Date(endDate).getTime() - new Date(startDate).getTime()) /
-                ONE_DAY_IN_MS
+                ONE_DAY_IN_MS,
         );
 
         const planDays = [];
 
         for (let i = 0; i <= planDuration; i++) {
             const dayDate = new Date(
-                new Date(startDate).getTime() + i * ONE_DAY_IN_MS
+                new Date(startDate).getTime() + i * ONE_DAY_IN_MS,
             );
             planDays.push({
                 date: dayDate,
@@ -98,7 +98,7 @@ export async function POST(request: Request) {
         }
 
         const { searchParams } = new URL(request.url);
-        const petId = searchParams.get("id");
+        const petId = searchParams.get('id');
 
         if (petId) {
             const newPlan = await prisma.medicationPlan.create({
@@ -118,10 +118,10 @@ export async function POST(request: Request) {
             return NextResponse.json(newPlan, { status: 201 });
         }
     } catch (error) {
-        console.error("Error adding pet:", error);
+        console.error('Error adding pet:', error);
         return NextResponse.json(
-            { error: "Failed to add pet" },
-            { status: 500 }
+            { error: 'Failed to add pet' },
+            { status: 500 },
         );
     }
 }

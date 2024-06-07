@@ -68,6 +68,8 @@ model Dose {
   dayId                String
   offset               Int // in minutes from midnight
   medicationId         String
+  plannedAmount        Float
+  givenAmount          Float? // Nullable if the dose hasn't been administered yet
   cumulativeAdjustment Int                @default(0) // in minutes, to optionally adjust for doses administered too late/too early
   status               DoseStatus         @default(PENDING)
   day                  Day                @relation(fields: [dayId], references: [id])
@@ -87,7 +89,7 @@ model Medication {
   totalDoses        Int
   doseUnit          String
   userId            String
-  visualDescription String?            // Optional visual description of the medication
+  visualDescription String? // Optional visual description of the medication
   user              User               @relation(fields: [userId], references: [id], name: "UserMedicationsLibrary")
   doses             Dose[]
   administeredDoses AdministeredDose[]

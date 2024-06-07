@@ -1,11 +1,12 @@
-import { getSession } from "@auth0/nextjs-auth0";
-import { NextResponse } from "next/server";
-import prisma from "@/app/_lib/prisma";
+import prisma from '@/app/_lib/prisma';
+import { getSession } from '@auth0/nextjs-auth0';
+import { NextResponse } from 'next/server';
+
 export async function GET(request: Request) {
     const session = await getSession();
 
     if (!session?.user)
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const user = await prisma.user.findUnique({
         where: {
@@ -14,11 +15,11 @@ export async function GET(request: Request) {
     });
 
     if (!user) {
-        return NextResponse.json({ error: "User not found" }, { status: 404 });
+        return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
     const { searchParams } = new URL(request.url);
-    const petId = searchParams.get("id");
+    const petId = searchParams.get('id');
 
     try {
         if (petId) {
@@ -46,8 +47,8 @@ export async function GET(request: Request) {
 
             if (!pet)
                 return NextResponse.json(
-                    { error: "Pet not found" },
-                    { status: 404 }
+                    { error: 'Pet not found' },
+                    { status: 404 },
                 );
 
             return NextResponse.json(pet);
@@ -78,8 +79,8 @@ export async function GET(request: Request) {
     } catch (error) {
         console.error(error);
         return NextResponse.json(
-            { error: "Internal Server Error" },
-            { status: 500 }
+            { error: 'Internal Server Error' },
+            { status: 500 },
         );
     }
 }
@@ -88,7 +89,7 @@ export async function POST(request: Request) {
     const session = await getSession();
 
     if (!session?.user)
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     try {
         const { name, species, breed, sex } = await request.json();
@@ -100,8 +101,8 @@ export async function POST(request: Request) {
 
         if (!user) {
             return NextResponse.json(
-                { error: "User not found" },
-                { status: 404 }
+                { error: 'User not found' },
+                { status: 404 },
             );
         }
 
@@ -118,10 +119,10 @@ export async function POST(request: Request) {
         });
         return NextResponse.json(newPet, { status: 201 });
     } catch (error) {
-        console.error("Error adding pet:", error);
+        console.error('Error adding pet:', error);
         return NextResponse.json(
-            { error: "Failed to add pet" },
-            { status: 500 }
+            { error: 'Failed to add pet' },
+            { status: 500 },
         );
     }
 }
@@ -130,7 +131,7 @@ export async function PUT(request: Request) {
     const session = await getSession();
 
     if (!session?.user)
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     try {
         const { id: petId, name, species, breed, sex } = await request.json();
@@ -142,8 +143,8 @@ export async function PUT(request: Request) {
 
         if (!user) {
             return NextResponse.json(
-                { error: "User not found" },
-                { status: 404 }
+                { error: 'User not found' },
+                { status: 404 },
             );
         }
 
@@ -160,8 +161,8 @@ export async function PUT(request: Request) {
 
         if (!pet) {
             return NextResponse.json(
-                { error: "Pet not found" },
-                { status: 404 }
+                { error: 'Pet not found' },
+                { status: 404 },
             );
         }
 
@@ -179,10 +180,10 @@ export async function PUT(request: Request) {
 
         return NextResponse.json(updatedPet, { status: 200 });
     } catch (error) {
-        console.error("Error adding pet:", error);
+        console.error('Error adding pet:', error);
         return NextResponse.json(
-            { error: "Failed to add pet" },
-            { status: 500 }
+            { error: 'Failed to add pet' },
+            { status: 500 },
         );
     }
 }

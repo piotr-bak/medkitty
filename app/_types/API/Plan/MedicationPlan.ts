@@ -1,6 +1,6 @@
-import type { Pet } from "../Pet/Pet";
-import type { User } from "../User/User";
-import type { Day } from "./Day";
+import type { Pet } from '../Pet/Pet';
+import type { User } from '../User/User';
+import type { Day } from './Day';
 
 export interface MedicationPlan {
     id: string;

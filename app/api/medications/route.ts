@@ -1,122 +1,78 @@
-import { getSession } from "@auth0/nextjs-auth0";
-import { NextResponse } from "next/server";
-import prisma from "@/app/_lib/prisma";
+import prisma from '@/app/_lib/prisma';
+import { getSession } from '@auth0/nextjs-auth0';
+import { NextResponse } from 'next/server';
 
-// export async function GET(request: Request) {
-//     const session = await getSession();
-
-//     if (!session?.user)
-//         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-//     const user = await prisma.user.findUnique({
-//         where: {
-//             foreignId: session.user.sub,
-//         },
-//     });
-
-//     if (!user) {
-//         return NextResponse.json({ error: "User not found" }, { status: 404 });
-//     }
-
-//     const { searchParams } = new URL(request.url);
-//     const petId = searchParams.get("id");
-
-//     try {
-//         if (petId) {
-//             const pet = await prisma.pet.findFirst({
-//                 where: {
-//                     id: petId,
-//                     OR: [
-//                         {
-//                             owners: {
-//                                 some: {
-//                                     id: user.id,
-//                                 },
-//                             },
-//                         },
-//                         {
-//                             caretakers: {
-//                                 some: {
-//                                     id: user.id,
-//                                 },
-//                             },
-//                         },
-//                     ],
-//                 },
-//             });
-
-//             if (!pet)
-//                 return NextResponse.json(
-//                     { error: "Pet not found" },
-//                     { status: 404 }
-//                 );
-
-//             return NextResponse.json(pet);
-//         } else if (!petId) {
-//             const pets = await prisma.pet.findMany({
-//                 where: {
-//                     OR: [
-//                         {
-//                             owners: {
-//                                 some: {
-//                                     id: user.id,
-//                                 },
-//                             },
-//                         },
-//                         {
-//                             caretakers: {
-//                                 some: {
-//                                     id: user.id,
-//                                 },
-//                             },
-//                         },
-//                     ],
-//                 },
-//             });
-
-//             return NextResponse.json(pets);
-//         }
-//     } catch (error) {
-//         console.error(error);
-//         return NextResponse.json(
-//             { error: "Internal Server Error" },
-//             { status: 500 }
-//         );
-//     }
-// }
-
-export async function POST(request: Request) {
+export async function GET() {
     const session = await getSession();
 
-    if (!session?.user)
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if ( !session?.user )
+        return NextResponse.json( { error: "Unauthorized" }, { status: 401 } );
+
+    const user = await prisma.user.findUnique( {
+        where: {
+            foreignId: session.user.sub,
+        },
+    } );
+
+    if ( !user ) {
+        return NextResponse.json( { error: "User not found" }, { status: 404 } );
+    }
 
     try {
-        const { name, totalDoses, doseUnit, visualDescription } =
-            await request.json();
-        const user = await prisma.user.findUnique({
+        const availableMedications = await prisma.medication.findMany( {
+            where: {
+                userId: user.id,
+            },
+        } );
+
+        if ( !availableMedications )
+            return NextResponse.json(
+                { error: "No medication found" },
+                { status: 404 }
+            );
+
+        return NextResponse.json( availableMedications );
+    } catch ( error ) {
+        console.error( error );
+        return NextResponse.json(
+            { error: "Internal Server Error" },
+            { status: 500 }
+        );
+    }
+}
+
+export async function POST( request: Request ) {
+    const session = await getSession();
+
+    if ( !session?.user )
+        return NextResponse.json( { error: 'Unauthorized' }, { status: 401 } );
+
+    try {
+        const { name, totalDoses, doseUnit, visualDescription } = await request.json();
+
+        const user = await prisma.user.findUnique( {
             where: {
                 foreignId: session.user.sub,
             },
-        });
+        } );
 
-        if (!user) {
+        if ( !user ) {
             return NextResponse.json(
-                { error: "User not found" },
-                { status: 404 }
+                { error: 'User not found' },
+                { status: 404 },
             );
         }
 
-        const totalDosesNumber = parseInt(totalDoses);
+        const totalDosesNumber = parseInt( totalDoses );
 
-        if (isNaN(totalDosesNumber)) {
+        if ( isNaN( totalDosesNumber ) ) {
             return NextResponse.json(
-                { error: "Invalid total doses value" },
-                { status: 400 }
+                { error: 'Invalid total doses value' },
+                { status: 400 },
             );
         }
 
-        const newMedication = await prisma.medication.create({
+        const newMedication = await prisma.medication.create( {
             data: {
                 name,
                 totalDoses: totalDosesNumber,
@@ -124,13 +80,14 @@ export async function POST(request: Request) {
                 visualDescription,
                 userId: user.id,
             },
-        });
-        return NextResponse.json(newMedication, { status: 201 });
-    } catch (error) {
-        console.error("Error adding medication:", error);
+        } );
+
+        return NextResponse.json( newMedication, { status: 201 } );
+    } catch ( error ) {
+        console.error( 'Error adding medication:', error );
         return NextResponse.json(
-            { error: "Failed to add medication" },
-            { status: 500 }
+            { error: 'Failed to add medication' },
+            { status: 500 },
         );
     }
 }

@@ -1,5 +1,5 @@
 export enum DoseStatus {
-    PENDING = "PENDING",
-    ADMINISTERED = "ADMINISTERED",
-    SKIPPED = "SKIPPED",
+    PENDING = 'PENDING',
+    ADMINISTERED = 'ADMINISTERED',
+    SKIPPED = 'SKIPPED',
 }

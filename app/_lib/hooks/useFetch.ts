@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import serverErrors from "./httpErrorCodes";
+import { useEffect, useState } from 'react';
+import serverErrors from './httpErrorCodes';
 
 interface FetchOptions extends RequestInit {
     logErrors?: boolean;
@@ -33,7 +33,7 @@ export function useFetch<T>(url: string, options?: FetchOptions) {
                 }
             } catch (error) {
                 if (error instanceof Error) {
-                    if ("AbortError" === error.name) return;
+                    if ('AbortError' === error.name) return;
                     setIsError(true);
                     if (options?.logErrors !== false)
                         console.error(error.message);
@@ -44,7 +44,7 @@ export function useFetch<T>(url: string, options?: FetchOptions) {
         })();
 
         return () => controller.abort();
-    }, [url]);
+    }, [url, options]);
 
     return { data, isError, isLoading };
 }

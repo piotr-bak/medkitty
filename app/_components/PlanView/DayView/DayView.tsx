@@ -1,7 +1,7 @@
 import type { Day } from '@/app/_types';
 import styles from './DayView.module.scss';
 
-export function DayView( { dayData }: { dayData: Day } ) {
+export function DayView({ dayData }: { dayData: Day }) {
     const { id, medicationPlanId: planId, date, doses } = dayData;
     return (
         <>
@@ -10,5 +10,5 @@ export function DayView( { dayData }: { dayData: Day } ) {
                 {JSON.stringify( day )} */}
             </div>
         </>
-    )
+    );
 }
