@@ -1,5 +1,5 @@
 export interface DoseFormValues {
-    dayId?: string;
+    dayId: string;
     medicationId: string;
     amount: number;
     time: string;

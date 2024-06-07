@@ -1,5 +1,5 @@
 import prisma from '@/app/_lib/prisma';
-import { msElapsedFromMidnight } from '@/app/_lib/utils/msElapsedFromMidnight';
+import { secondsElapsedFromMidnight } from '@/app/_lib/utils/secondsElapsedFromMidnight';
 import { getSession } from '@auth0/nextjs-auth0';
 import { NextResponse } from 'next/server';
 
@@ -25,16 +25,22 @@ export async function POST( request: Request ) {
             );
         }
 
-        const offsetFromMidnight = await msElapsedFromMidnight( time );
+        const offsetFromMidnight = await secondsElapsedFromMidnight( time );
 
-        const parsedAmount = parseFloat( amount );
+        const parsedPlannedAmount = parseFloat( amount );
+
+        console.log( 'Day ID', dayId );
 
         const newDose = await prisma.dose.create( {
             data: {
-                dayId,
+                day: {
+                    connect: { id: dayId },
+                },
                 offset: offsetFromMidnight,
-                medicationId,
-                plannedAmount: parsedAmount,
+                medication: {
+                    connect: { id: medicationId },
+                },
+                plannedAmount: parsedPlannedAmount,
                 cumulativeAdjustment: 0,
             },
         } );

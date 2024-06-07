@@ -46,12 +46,12 @@ export function PlanView( {
 
     return (
         <>
-            <div className={styles.wrapper}>
+            <div className={styles.schedule}>
                 {data?.days && (
                     <>
-                        <p>{data.name}</p>
+                        <h1 className={styles.planTitle}>{data.name}</h1>
                         <TabContext value={value}>
-                            <TabList onChange={handleChange}>
+                            <TabList onChange={handleChange} centered scrollButtons>
                                 {data.days.map( ( _, index ) => {
                                     return (
                                         <Tab
@@ -70,9 +70,11 @@ export function PlanView( {
                                 );
                             } )}
                         </TabContext>
-                        <button onClick={handleButtonClick}>add a dose</button>
                     </>
                 )}
+            </div>
+            <div className={styles.bottom}>
+                <button onClick={handleButtonClick} className={styles.button}>add a dose</button>
             </div>
             <Modal ref={ref} onClose={onClose}>
                 <DoseForm dayId={activeDayId ? activeDayId : ''} />

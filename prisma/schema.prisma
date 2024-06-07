@@ -75,6 +75,9 @@ model Dose {
   day                  Day                @relation(fields: [dayId], references: [id])
   medication           Medication         @relation(fields: [medicationId], references: [id])
   administeredDoses    AdministeredDose[]
+
+  @@index([dayId], name: "dayId")
+  @@index([medicationId], name: "medicationId")
 }
 
 enum DoseStatus {

@@ -32,7 +32,7 @@ export function DoseForm( { dayId }: { dayId: string } ) {
         if ( selectedMedication ) {
             const selectedMed = availableMeds?.find( med => med.id === selectedMedication );
             setDoseEnabled( true );
-            setDoseUnit( `${selectedMed?.doseUnit[-1] === 's' ? selectedMed?.doseUnit : `${selectedMed?.doseUnit}s`}` );
+            setDoseUnit( `${selectedMed?.doseUnit.slice( -1 ) === 's' ? selectedMed?.doseUnit : `${selectedMed?.doseUnit}s`}` );
         } else {
             setDoseEnabled( false );
             setDoseUnit( '' );
@@ -51,8 +51,8 @@ export function DoseForm( { dayId }: { dayId: string } ) {
     const onSubmit: SubmitHandler<DoseFormValues> = async ( data ) => {
         if ( petId ) {
             try {
-                data = { dayId, ...data };
-                const response = await createDose( data );
+                const doseData = { ...data, dayId };
+                const response = await createDose( doseData );
                 if ( response.ok ) {
                     console.log( 'Dose added successfully!' );
                     reset(); // Optionally reset the form

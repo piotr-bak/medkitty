@@ -13,20 +13,17 @@ import { useSearchParams } from 'next/navigation';
 import styles from './page.module.scss';
 
 export default function Page() {
-    const petId = useSearchParams().get('id');
+    const petId = useSearchParams().get( 'id' );
     const { data, isLoading, isError } = useFetch<MedicationPlan>(
         `${process.env.NEXT_PUBLIC_APP_URL}/api/pets/${petId && `plan?id=${petId}`}`,
     );
 
-    useEffect(() => console.log(data));
+    useEffect( () => console.log( data ) );
 
     return (
         <main className={styles.container}>
             <section className={styles.record}>
                 <PetForm petId={petId} />
-                <Link href={'/dashboard'}>
-                    <button>go back</button>
-                </Link>
             </section>
             <section className={styles.planSection}>
                 {data ? (
