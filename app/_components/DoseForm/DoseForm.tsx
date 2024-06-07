@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useSearchParams } from 'next/navigation';
 import { useFetch } from '@/app/_lib/hooks/useFetch';
-import { createDose } from '@/app/_lib/services/schedulingService';
+import { createDose } from '@/app/_lib/services/medicationService';
 import styles from './DoseForm.module.scss';
 import { MedicationForm } from '../MedicationForm/MedicationForm';
 

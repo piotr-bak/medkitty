@@ -1,4 +1,5 @@
 import type { Medication } from '../../_types';
+import type { DoseFormValues } from '@/app/_types';
 
 export async function addMedication( data: Medication ): Promise<Response> {
     try {
@@ -20,6 +21,33 @@ export async function addMedication( data: Medication ): Promise<Response> {
         throw error;
     }
 }
+
+export async function createDose(
+    data: DoseFormValues | string,
+): Promise<Response> {
+    try {
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_APP_URL}/api/medications/dose`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify( data ),
+            },
+        );
+
+        if ( !response.ok ) {
+            throw new Error( `HTTP error! status: ${response.status}` );
+        }
+
+        return response;
+    } catch ( error ) {
+        console.error( 'Error adding schedule:', error );
+        throw error;
+    }
+}
+
 
 // export async function updatePet(data: Pet) {
 //     console.log("Update Pet data", data);
