@@ -10,12 +10,15 @@ import { useFetch } from '@/app/_lib/hooks/useFetch';
 import { createDose } from '@/app/_lib/services/medicationService';
 import styles from './DoseForm.module.scss';
 import { MedicationForm } from '../MedicationForm/MedicationForm';
-import { Select, MenuItem, TextField, Button, InputLabel, FormControl } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add'
 
 export function DoseForm( { dayId }: { dayId: string } ) {
     const { data: availableMeds, isLoading, isError } = useFetch<Medication[]>( `${process.env.NEXT_PUBLIC_APP_URL}/api/medications` );
     const petId = useSearchParams().get( 'id' );
-    const { control, handleSubmit, watch, reset } = useForm<DoseFormValues>( {
+    const { control, handleSubmit, watch, reset, formState: { errors }, } = useForm<DoseFormValues>( {
         defaultValues: {
             medicationId: '',
             amount: 0,
@@ -69,13 +72,12 @@ export function DoseForm( { dayId }: { dayId: string } ) {
     return (
         <>
             <form onSubmit={handleSubmit( onSubmit )} className={styles.form}>
-                <label>Medication name:</label>
                 <Controller
                     name="medicationId"
                     control={control}
                     rules={{ required: true }}
                     render={( { field } ) => (
-                        <select className={styles.input} {...field}>
+                        <select className={styles.selectInput} {...field}>
                             <option value=''>Please select a medication</option>
                             {availableMeds && availableMeds.map( medication => (
                                 <option key={medication.id} value={medication.id}>{medication.name}</option>
@@ -83,38 +85,49 @@ export function DoseForm( { dayId }: { dayId: string } ) {
                         </select>
                     )}
                 />
-                <label>Medication dose {doseUnit && `(${doseUnit})`}:</label>
                 <Controller
                     name="amount"
                     control={control}
                     rules={{ required: true }}
                     render={( { field } ) => (
-                        <input
+                        <TextField
+                            label={`Medication dose ${doseUnit && `(${doseUnit})`}`}
                             type="number"
-                            step="0.05"
                             className={styles.input}
                             placeholder='Enter dose'
                             {...field}
+                            value={field.value || ''}
+                            onChange={field.onChange}
+                            onBlur={field.onBlur}
                             disabled={!doseEnabled}
                         />
                     )}
                 />
-                <label>Administration time:</label>
                 <Controller
                     name="time"
                     control={control}
                     rules={{ required: true }}
                     render={( { field } ) => (
-                        <input
+                        <TextField
+                            label="Administration time"
                             type="time"
                             className={styles.input}
                             {...field}
+                            onChange={field.onChange}
+                            onBlur={field.onBlur}
                             disabled={!timeEnabled}
                         />
                     )}
                 />
-                <button type="submit">Submit</button>
-            </form>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="info"
+                    size="medium"
+                    className={styles.submitButton}
+                    startIcon={<AddIcon />}
+                >Add to</Button>
+            </form >
             <MedicationForm />
         </>
     );

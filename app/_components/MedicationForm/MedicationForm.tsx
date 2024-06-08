@@ -1,16 +1,15 @@
-import { useForm } from 'react-hook-form';
+'use client';
+
+import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
+import { addMedication } from '@/app/_lib/services/medicationService';
 import styles from './MedicationForm.module.scss';
 import type { Medication } from '@/app/_types';
-import type { SubmitHandler } from 'react-hook-form';
-import { addMedication } from '@/app/_lib/services/medicationService';
-import Accordion from '@mui/material/Accordion';
-import AccordionActions from '@mui/material/AccordionActions';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import SaveIcon from '@mui/icons-material/Save';
 
 export function MedicationForm() {
+    const { control, handleSubmit, reset, formState: { errors } } = useForm<Medication>();
 
     const onSubmit: SubmitHandler<Medication> = async ( data ) => {
         try {
@@ -24,30 +23,73 @@ export function MedicationForm() {
         }
     };
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<Medication>();
     return (
         <form className={styles.form} onSubmit={handleSubmit( onSubmit )}>
-            <label>name</label>
-            <input
-                className={styles.input}
-                {...register( 'name', { required: true } )}
+            <Controller
+                name="name"
+                control={control}
+                rules={{ required: "Name is required" }}
+                render={( { field } ) => (
+                    <TextField
+                        label="Name"
+                        className={styles.input}
+                        {...field}
+                        error={!!errors.name}
+                        helperText={errors.name ? errors.name.message : ""}
+                    />
+                )}
             />
-            <label>number of doses per box</label>
-            <input
-                className={styles.input}
-                {...register( 'totalDoses', { required: true } )}
+            <Controller
+                name="totalDoses"
+                control={control}
+                rules={{ required: "Total doses is required" }}
+                render={( { field } ) => (
+                    <TextField
+                        label="Number of doses per box"
+                        className={styles.input}
+                        {...field}
+                        error={!!errors.totalDoses}
+                        helperText={errors.totalDoses ? errors.totalDoses.message : ""}
+                    />
+                )}
             />
-            <label>dose unit</label>
-            <input
-                className={styles.input}
-                {...register( 'doseUnit', { required: true } )}
+            <Controller
+                name="doseUnit"
+                control={control}
+                rules={{ required: "Dose unit is required" }}
+                render={( { field } ) => (
+                    <TextField
+                        label="Dose unit"
+                        className={styles.input}
+                        {...field}
+                        error={!!errors.doseUnit}
+                        helperText={errors.doseUnit ? errors.doseUnit.message : ""}
+                    />
+                )}
             />
-            <label>visual description</label>
-            <input
-                className={styles.input}
-                {...register( 'visualDescription', { required: false } )}
+            <Controller
+                name="visualDescription"
+                control={control}
+                render={( { field } ) => (
+                    <TextField
+                        label="Visual description"
+                        className={styles.input}
+                        {...field}
+                        error={!!errors.visualDescription}
+                        helperText={errors.visualDescription ? errors.visualDescription.message : ""}
+                    />
+                )}
             />
-            <button type='submit'>add</button>
+            <Button
+                className={styles.submitButton}
+                type="submit"
+                variant="contained"
+                color="info"
+                size="medium"
+                startIcon={<SaveIcon />}
+            >
+                Add
+            </Button>
         </form>
     );
 }
