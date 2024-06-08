@@ -6,6 +6,7 @@ import { addPet, updatePet } from '@/app/_lib/services/petService';
 import type { Pet } from '@/app/_types';
 import { Controller, useForm, type SubmitHandler } from 'react-hook-form';
 import styles from './PetForm.module.scss';
+import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
@@ -20,7 +21,7 @@ export function PetForm( { petId }: { petId: string | null } ) {
         formState: { errors },
     } = useForm<Pet>();
 
-    const { data: currentPet, isError } = useFetch<Pet>(
+    const { data: currentPet, isLoading, isError } = useFetch<Pet>(
         `${process.env.NEXT_PUBLIC_APP_URL}/api/${petId && `pets?id=${petId}`}`,
     );
 
@@ -39,6 +40,12 @@ export function PetForm( { petId }: { petId: string | null } ) {
         }
     };
 
+    if ( isLoading ) return (
+        <div className={styles.placeholder}>
+            <CircularProgress />
+        </div>
+    )
+
     return (
         <>
             <form className={styles.form} onSubmit={handleSubmit( onSubmit )}>
@@ -50,11 +57,11 @@ export function PetForm( { petId }: { petId: string | null } ) {
                             label="Name"
                             className={styles.input}
                             {...field}
-                            value={field.value || ''} // Add value prop
-                            onChange={field.onChange} // Add onChange prop
-                            onBlur={field.onBlur} // Add onBlur prop
-                            error={!!errors.name} // Add error prop if needed
-                            helperText={errors.name ? "Name is required" : ""} // Add helperText prop if needed
+                            value={field.value || ''}
+                            onChange={field.onChange}
+                            onBlur={field.onBlur}
+                            error={!!errors.name}
+                            helperText={errors.name ? "Name is required" : ""}
                         /> )}
                 />
                 <Controller
@@ -65,11 +72,11 @@ export function PetForm( { petId }: { petId: string | null } ) {
                             label="Species"
                             className={styles.input}
                             {...field}
-                            value={field.value || ''} // Add value prop
-                            onChange={field.onChange} // Add onChange prop
-                            onBlur={field.onBlur} // Add onBlur prop
-                            error={!!errors.name} // Add error prop if needed
-                            helperText={errors.name ? "Species is required" : ""} // Add helperText prop if needed
+                            value={field.value || ''}
+                            onChange={field.onChange}
+                            onBlur={field.onBlur}
+                            error={!!errors.name}
+                            helperText={errors.name ? "Species is required" : ""}
                         /> )}
                 />
                 <Controller
@@ -80,11 +87,11 @@ export function PetForm( { petId }: { petId: string | null } ) {
                             label="Breed"
                             className={styles.input}
                             {...field}
-                            value={field.value || ''} // Add value prop
-                            onChange={field.onChange} // Add onChange prop
-                            onBlur={field.onBlur} // Add onBlur prop
-                            error={!!errors.name} // Add error prop if needed
-                            helperText={errors.name ? "Breed is required" : ""} // Add helperText prop if needed
+                            value={field.value || ''}
+                            onChange={field.onChange}
+                            onBlur={field.onBlur}
+                            error={!!errors.name}
+                            helperText={errors.name ? "Breed is required" : ""}
                         /> )}
                 />
                 <Controller
@@ -96,11 +103,11 @@ export function PetForm( { petId }: { petId: string | null } ) {
                             select
                             className={styles.input}
                             {...field}
-                            value={field.value || ''} // Add value prop
-                            onChange={field.onChange} // Add onChange prop
-                            onBlur={field.onBlur} // Add onBlur prop
-                            error={!!errors.name} // Add error prop if needed
-                            helperText={errors.name ? "Breed is required" : ""} // Add helperText prop if needed
+                            value={field.value || ''}
+                            onChange={field.onChange}
+                            onBlur={field.onBlur}
+                            error={!!errors.name}
+                            helperText={errors.name ? "Breed is required" : ""}
                         >
                             <MenuItem value='female'>female</MenuItem>
                             <MenuItem value='male'>male</MenuItem>
@@ -108,8 +115,10 @@ export function PetForm( { petId }: { petId: string | null } ) {
                 />
                 <Button
                     type="submit"
-                    variant="outlined"
-                    size="small"
+                    variant="contained"
+                    color="info"
+                    size="medium"
+                    className={styles.submitButton}
                     startIcon={<SaveIcon />}
                 >Save</Button>
             </form >

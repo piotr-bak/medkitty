@@ -12,11 +12,13 @@ export default function Page() {
                 src={logo}
                 alt={'MEDKitty logo'}
                 className={styles.logo}
+                priority
             />
             <Image
                 src={illustration}
                 alt={'cat and dog playing together'}
                 className={styles.illustration}
+                priority
             />
             <a href="/api/auth/login" className={styles.loginButton}>
                 <Button variant='contained' color='info' size="large" endIcon={<LoginIcon />}>Login</Button>

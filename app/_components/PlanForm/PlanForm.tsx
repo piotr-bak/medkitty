@@ -1,12 +1,19 @@
+'use client';
+
+import { useEffect } from 'react';
 import { createPlan } from '@/app/_lib/services/schedulingService';
 import type { MedicationPlan } from '@/app/_types/API/Plan/MedicationPlan';
 import { useSearchParams } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import type { SubmitHandler } from 'react-hook-form';
+import { Controller, useForm, type SubmitHandler } from 'react-hook-form';
 import styles from './PlanForm.module.scss';
+import CircularProgress from '@mui/material/CircularProgress';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import SaveIcon from '@mui/icons-material/Save';
 
 export function PlanForm() {
     const {
+        control,
         register,
         handleSubmit,
         reset,
@@ -31,28 +38,73 @@ export function PlanForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit( onSubmit )}>
-            <label>name</label>
-            <input
-                className={styles.input}
-                {...register( 'name', { required: true } )}
+        <form className={styles.form} onSubmit={handleSubmit( onSubmit )}>
+            <Controller
+                name="name"
+                control={control}
+                render={( { field } ) => (
+                    <TextField
+                        label="Treatement plan name"
+                        className={styles.input}
+                        {...field}
+                        value={field.value || ''}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                        error={!!errors.name}
+                        helperText={errors.name ? "Name is required" : ""}
+                    />
+                )}
             />
-            <br />
-            <label>start date</label>
-            <input
-                type="date"
-                className={styles.input}
-                {...register( 'startDate', { required: true } )}
+            <Controller
+                name="startDate"
+                control={control}
+                render={( { field } ) => (
+                    <TextField
+                        label="Start Date"
+                        type="date"
+                        className={styles.input}
+                        {...field}
+                        value={field.value || ''}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        error={!!errors.startDate}
+                        helperText={errors.startDate ? "Start date is required" : ""}
+                    />
+                )}
             />
-            <br />
-            <label>end date</label>
-            <input
-                type="date"
-                className={styles.input}
-                {...register( 'endDate', { required: true } )}
+            <Controller
+                name="endDate"
+                control={control}
+                render={( { field } ) => (
+                    <TextField
+                        label="End Date"
+                        type="date"
+                        className={styles.input}
+                        {...field}
+                        value={field.value || ''}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        error={!!errors.endDate}
+                        helperText={errors.endDate ? "End date is required" : ""}
+                    />
+                )}
             />
-            <br />
-            <button type="submit">create a plan</button>
+            <Button
+                type="submit"
+                variant="contained"
+                color="info"
+                size="medium"
+                className={styles.submitButton}
+                startIcon={<SaveIcon />}
+            >
+                Create Plan
+            </Button>
         </form>
     );
 }

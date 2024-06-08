@@ -9,6 +9,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export function PetList() {
     const { data: pets, isError } = useFetch<Pet[]>( '/api/pets' );
@@ -37,8 +38,10 @@ export function PetList() {
                                 </ListItemButton>
                             </div>
                         </ListItem>
-                    ) )
-                    : !isError && <p>loading data</p>}
+                    ) ) : !isError &&
+                    <div className={styles.placeholder}>
+                        <CircularProgress />
+                    </div>}
             </List>
         </div>
     );

@@ -11,6 +11,9 @@ import { DoseForm } from '../DoseForm/DoseForm';
 import { Modal } from '../Modal/Modal';
 import { DayView } from './DayView/DayView';
 import styles from './PlanView.module.scss';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import EditIcon from '@mui/icons-material/Edit';
 
 export function PlanView( {
     data,
@@ -74,7 +77,12 @@ export function PlanView( {
                 )}
             </div>
             <div className={styles.bottom}>
-                <button onClick={handleButtonClick} className={styles.button}>add a dose</button>
+                <SpeedDial
+                    ariaLabel='MedKitty add medicine'
+                    sx={{ position: 'absolute', bottom: 32, right: 32 }}
+                    icon={<SpeedDialIcon openIcon={<EditIcon />} />}
+                    onClick={handleButtonClick}
+                />
             </div>
             <Modal ref={ref} onClose={onClose}>
                 <DoseForm dayId={activeDayId ? activeDayId : ''} />

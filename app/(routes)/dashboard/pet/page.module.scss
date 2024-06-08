@@ -1,15 +1,32 @@
 .container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
 
-.record {
-    max-width: 20%;
+.petData {
+    width: 100%;
+    max-width: 600px;
 }
 
 .planSection {
-    border-left: 1px solid goldenrod;
-    width: 50%;
-    height: 100%;
-    min-height: 650vh;
+    margin-top: 20px;
+    display: flex;
+}
+
+.drawerContent {
+    width: 25rem;
+    padding: 20px;
+}
+
+.puller {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    background-color: white;
+    border-radius: 0 50% 50% 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

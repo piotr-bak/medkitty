@@ -11,9 +11,11 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import { useRouter } from 'next/navigation';
+import illustration from '../../_assets/vet-illustration.svg'
+import Image from 'next/image';
 
 const actions = [
-    { icon: <AddIcon />, name: 'Add a Pet', href: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/pet` },
+    { icon: <AddIcon />, name: 'Add a New Pet', href: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/pet` },
     { icon: <MedicationIcon />, name: 'Medications' },
     { icon: <GroupAddIcon />, name: 'Invites' },
 ];
@@ -31,14 +33,6 @@ export default function Page() {
         <>
             <section>
                 <PetList />
-                {/* <Link href={'/dashboard/pet'}>
-                    <button
-                        className={styles.buttonAdd}
-                        aria-label="add pet"
-                    >
-                        {'+'}
-                    </button>
-                </Link> */}
                 <SpeedDial
                     ariaLabel='MedKitty main menu'
                     icon={<SpeedDialIcon openIcon={<PetsIcon />} />}
