@@ -6,7 +6,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useSearchParams } from 'next/navigation';
-import { useFetch } from '@/app/_lib/hooks/useFetch';
+import { revalidateFetch, useFetch } from '@/app/_lib/hooks/useFetch';
 import { createDose } from '@/app/_lib/services/medicationService';
 import styles from './DoseForm.module.scss';
 import { MedicationForm } from '../MedicationForm/MedicationForm';
@@ -59,7 +59,8 @@ export function DoseForm( { dayId }: { dayId: string } ) {
                 const response = await createDose( doseData );
                 if ( response.ok ) {
                     console.log( 'Dose added successfully!' );
-                    reset(); // Optionally reset the form
+                    reset();
+                    revalidateFetch( `${process.env.NEXT_PUBLIC_APP_URL}/api/pets/${petId && `plan?id=${petId}`}` );
                 }
             } catch ( error ) {
                 console.error( 'Failed to add dose to schedule:', error );

@@ -2,6 +2,7 @@
 
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
 import { addMedication } from '@/app/_lib/services/medicationService';
+import { revalidateFetch } from '@/app/_lib/hooks/useFetch';
 import styles from './MedicationForm.module.scss';
 import type { Medication } from '@/app/_types';
 import TextField from '@mui/material/TextField';
@@ -17,6 +18,7 @@ export function MedicationForm() {
             if ( response.ok ) {
                 console.log( 'Medication successfully added to library!' );
                 reset();
+                revalidateFetch( `${process.env.NEXT_PUBLIC_APP_URL}/api/medications` );
             }
         } catch ( error ) {
             console.error( 'Failed add medication to library:', error );

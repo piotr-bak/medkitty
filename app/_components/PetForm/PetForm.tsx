@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useFetch } from '@/app/_lib/hooks/useFetch';
+import { revalidateFetch, useFetch } from '@/app/_lib/hooks/useFetch';
 import { addPet, updatePet } from '@/app/_lib/services/petService';
 import type { Pet } from '@/app/_types';
 import { Controller, useForm, type SubmitHandler } from 'react-hook-form';
@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save'
+import { useRouter } from 'next/navigation';
 
 export function PetForm( { petId }: { petId: string | null } ) {
     const {
@@ -20,6 +21,8 @@ export function PetForm( { petId }: { petId: string | null } ) {
         reset,
         formState: { errors },
     } = useForm<Pet>();
+
+    const router = useRouter();
 
     const { data: currentPet, isLoading, isError } = useFetch<Pet>(
         `${process.env.NEXT_PUBLIC_APP_URL}/api/${petId && `pets?id=${petId}`}`,
@@ -33,11 +36,13 @@ export function PetForm( { petId }: { petId: string | null } ) {
 
     const onSubmit: SubmitHandler<Pet> = async ( data ) => {
         if ( petId ) {
-            { console.log( 'pet data in Submit', JSON.stringify( data ) ) }
             updatePet( data );
         } else {
-            addPet( data );
+            const newPetId = await addPet( data );
+            console.log( 'New pet', newPetId );
+            router.push( `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/pet?id=${newPetId}` )
         }
+        revalidateFetch( '/api/pets' );
     };
 
     if ( isLoading ) return (

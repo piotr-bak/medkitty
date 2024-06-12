@@ -10,6 +10,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
+import { revalidateFetch } from '@/app/_lib/hooks/useFetch';
 
 export function PlanForm() {
     const {
@@ -27,7 +28,8 @@ export function PlanForm() {
                 const response = await createPlan( petId, data );
                 if ( response.ok ) {
                     console.log( 'Schedule created successfully!' );
-                    reset(); // Optionally reset the form
+                    reset();
+                    revalidateFetch( `${process.env.NEXT_PUBLIC_APP_URL}/api/pets/${petId && `plan?id=${petId}`}` );
                 }
             } catch ( error ) {
                 console.error( 'Failed to create schedule:', error );
