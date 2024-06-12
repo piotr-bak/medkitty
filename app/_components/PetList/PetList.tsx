@@ -3,7 +3,7 @@ import type { Pet } from '@/app/_types';
 import Link from 'next/link';
 import styles from './PetList.module.scss';
 import ShareIcon from '@mui/icons-material/Share';
-import EditCalendarIcon from '@mui/icons-material/EditCalendar';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -32,7 +32,7 @@ export function PetList() {
                                 <ListItemButton className={styles.listItemButton} aria-label="see more">
                                     <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/dashboard/pet?id=${pet.id}`} className={styles.link}>
                                         <ListItemIcon className={styles.listItemIcon}>
-                                            <EditCalendarIcon />
+                                            <CalendarMonthIcon />
                                         </ListItemIcon>
                                     </Link>
                                 </ListItemButton>
