@@ -9,3 +9,4 @@ export * from './API/Plan/MedicationPlan';
 export * from './API/User/User';
 export * from './components/DoseFormValues';
 export * from './components/ModalProps';
+export * from './components/PetFormProps';

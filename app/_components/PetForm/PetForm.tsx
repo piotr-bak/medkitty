@@ -11,9 +11,11 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save'
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useRouter } from 'next/navigation';
+import type { PetFormProps } from '@/app/_types';
 
-export function PetForm( { petId }: { petId: string | null } ) {
+export function PetForm( { petId, mode }: PetFormProps ) {
     const {
         control,
         register,
@@ -118,14 +120,26 @@ export function PetForm( { petId }: { petId: string | null } ) {
                             <MenuItem value='male'>male</MenuItem>
                         </TextField> )}
                 />
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color="info"
-                    size="medium"
-                    className={styles.submitButton}
-                    startIcon={<SaveIcon />}
-                >Save</Button>
+                <div className={styles.bottomPanel}>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="info"
+                        size="medium"
+                        className={styles.submitButton}
+                        startIcon={<SaveIcon />}
+                    >Save</Button>
+                    {( mode === 'edit' ) &&
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="error"
+                            size="medium"
+                            className={styles.submitButton}
+                            startIcon={<HighlightOffIcon />}
+                        >Delete</Button>
+                    }
+                </div>
             </form >
         </>
     );

@@ -11,9 +11,13 @@ import { useSearchParams } from 'next/navigation';
 import styles from './page.module.scss';
 import MenuIcon from '@mui/icons-material/Menu';
 import type { MedicationPlan } from '@/app/_types';
+import type { PetFormMode } from '@/app/_types';
 
 export default function Page() {
     const petId = useSearchParams().get( 'id' );
+    const modeParam = useSearchParams().get( 'mode' );
+    const mode: PetFormMode = modeParam === 'edit' ? 'edit' : 'view';
+
     const { data, isLoading, isError } = useFetch<MedicationPlan>(
         `${process.env.NEXT_PUBLIC_APP_URL}/api/pets/${petId && `plan?id=${petId}`}`,
     );
@@ -28,9 +32,9 @@ export default function Page() {
 
     return (
         <main className={styles.container}>
-            {petId === null ? (
+            {( petId === null || mode === 'edit' ) ? (
                 <section className={styles.petData}>
-                    <PetForm petId={petId} />
+                    <PetForm petId={petId} mode={mode} />
                 </section>
             ) : (
                 <>

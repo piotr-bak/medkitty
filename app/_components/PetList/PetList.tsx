@@ -3,7 +3,7 @@ import type { Pet } from '@/app/_types';
 import Link from 'next/link';
 import styles from './PetList.module.scss';
 import ShareIcon from '@mui/icons-material/Share';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import TuneIcon from '@mui/icons-material/Tune';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -22,17 +22,23 @@ export function PetList() {
                 {pets && pets.length > 0
                     ? pets.map( ( pet ) => (
                         <ListItem key={pet.id} className={styles.listItem}>
-                            <ListItemText className={styles.listItemText}>{pet.name}</ListItemText>
+                            <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/dashboard/pet?id=${pet.id}`} className={styles.name}>
+                                <ListItemText className={styles.listItemText}>{pet.name}</ListItemText>
+                            </Link>
                             <div className={styles.listItemButtons}>
                                 <ListItemButton className={styles.listItemButton}>
                                     <ListItemIcon className={styles.listItemIcon}>
-                                        <ShareIcon />
+                                        <ShareIcon sx={[{
+                                            '&:hover': {
+                                                color: '#2196f3',
+                                            }
+                                        }]} />
                                     </ListItemIcon>
                                 </ListItemButton>
                                 <ListItemButton className={styles.listItemButton} aria-label="see more">
-                                    <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/dashboard/pet?id=${pet.id}`} className={styles.link}>
+                                    <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/dashboard/pet?id=${pet.id}&mode=edit`} className={styles.link}>
                                         <ListItemIcon className={styles.listItemIcon}>
-                                            <CalendarMonthIcon />
+                                            <TuneIcon />
                                         </ListItemIcon>
                                     </Link>
                                 </ListItemButton>
