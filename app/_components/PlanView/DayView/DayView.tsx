@@ -9,7 +9,6 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent, {
     timelineOppositeContentClasses,
 } from '@mui/lab/TimelineOppositeContent';
-import { useFetch } from '@/app/_lib/hooks/useFetch';
 import { convertOffsetToTime } from '@/app/_lib/utils/secondsElapsedFromMidnight';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
@@ -33,7 +32,7 @@ export function DayView( { dayData }: { dayData: Day } ) {
                             },
                         }}>
                         <div className={styles.panel}>
-                            {doses.map( ( item: Dose ) => {
+                            {doses.sort( ( a, b ) => a.offset - b.offset ).map( ( item: Dose ) => {
                                 const dose = {
                                     name: item.medication.name,
                                     amount: item.plannedAmount,
