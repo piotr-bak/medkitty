@@ -1,35 +1,16 @@
 import prisma from '@/app/_lib/prisma';
+import { authenticateUser } from '@/app/_lib/services/internalAuthService';
 import { secondsElapsedFromMidnight } from '@/app/_lib/utils/secondsElapsedFromMidnight';
-import { getSession } from '@auth0/nextjs-auth0';
 import { NextResponse } from 'next/server';
 
 export async function POST( request: Request ) {
-    const session = await getSession();
-
-    if ( !session?.user )
-        return NextResponse.json( { error: 'Unauthorized' }, { status: 401 } );
+    const { response, user } = await authenticateUser();
+    if ( response ) return response;
 
     try {
         const { dayId, medicationId, amount, time } = await request.json();
-
-        const user = await prisma.user.findUnique( {
-            where: {
-                foreignId: session.user.sub,
-            },
-        } );
-
-        if ( !user ) {
-            return NextResponse.json(
-                { error: 'User not found' },
-                { status: 404 },
-            );
-        }
-
         const offsetFromMidnight = await secondsElapsedFromMidnight( time );
-
         const parsedPlannedAmount = parseFloat( amount );
-
-        console.log( 'Day ID', dayId );
 
         const newDose = await prisma.dose.create( {
             data: {

@@ -1,22 +1,10 @@
 import prisma from '@/app/_lib/prisma';
-import { getSession } from '@auth0/nextjs-auth0';
+import { authenticateUser } from '@/app/_lib/services/internalAuthService';
 import { NextResponse } from 'next/server';
 
 export async function GET( request: Request ) {
-    const session = await getSession();
-
-    if ( !session?.user )
-        return NextResponse.json( { error: 'Unauthorized' }, { status: 401 } );
-
-    const user = await prisma.user.findUnique( {
-        where: {
-            foreignId: session.user.sub,
-        },
-    } );
-
-    if ( !user ) {
-        return NextResponse.json( { error: 'User not found' }, { status: 404 } );
-    }
+    const { response, user } = await authenticateUser();
+    if ( response ) return response;
 
     const { searchParams } = new URL( request.url );
     const petId = searchParams.get( 'id' );
@@ -86,25 +74,11 @@ export async function GET( request: Request ) {
 }
 
 export async function POST( request: Request ) {
-    const session = await getSession();
-
-    if ( !session?.user )
-        return NextResponse.json( { error: 'Unauthorized' }, { status: 401 } );
+    const { response, user } = await authenticateUser();
+    if ( response ) return response;
 
     try {
         const { name, species, breed, sex } = await request.json();
-        const user = await prisma.user.findUnique( {
-            where: {
-                foreignId: session.user.sub,
-            },
-        } );
-
-        if ( !user ) {
-            return NextResponse.json(
-                { error: 'User not found' },
-                { status: 404 },
-            );
-        }
 
         const newPet = await prisma.pet.create( {
             data: {
@@ -128,25 +102,11 @@ export async function POST( request: Request ) {
 }
 
 export async function PUT( request: Request ) {
-    const session = await getSession();
-
-    if ( !session?.user )
-        return NextResponse.json( { error: 'Unauthorized' }, { status: 401 } );
+    const { response, user } = await authenticateUser();
+    if ( response ) return response;
 
     try {
         const { id: petId, name, species, breed, sex } = await request.json();
-        const user = await prisma.user.findUnique( {
-            where: {
-                foreignId: session.user.sub,
-            },
-        } );
-
-        if ( !user ) {
-            return NextResponse.json(
-                { error: 'User not found' },
-                { status: 404 },
-            );
-        }
 
         const pet = await prisma.pet.findFirst( {
             where: {

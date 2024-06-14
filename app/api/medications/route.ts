@@ -1,22 +1,10 @@
 import prisma from '@/app/_lib/prisma';
-import { getSession } from '@auth0/nextjs-auth0';
+import { authenticateUser } from '@/app/_lib/services/internalAuthService';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-    const session = await getSession();
-
-    if ( !session?.user )
-        return NextResponse.json( { error: "Unauthorized" }, { status: 401 } );
-
-    const user = await prisma.user.findUnique( {
-        where: {
-            foreignId: session.user.sub,
-        },
-    } );
-
-    if ( !user ) {
-        return NextResponse.json( { error: "User not found" }, { status: 404 } );
-    }
+    const { response, user } = await authenticateUser();
+    if ( response ) return response;
 
     try {
         const availableMedications = await prisma.medication.findMany( {
@@ -42,27 +30,11 @@ export async function GET() {
 }
 
 export async function POST( request: Request ) {
-    const session = await getSession();
-
-    if ( !session?.user )
-        return NextResponse.json( { error: 'Unauthorized' }, { status: 401 } );
+    const { response, user } = await authenticateUser();
+    if ( response ) return response;
 
     try {
         const { name, totalDoses, doseUnit, visualDescription } = await request.json();
-
-        const user = await prisma.user.findUnique( {
-            where: {
-                foreignId: session.user.sub,
-            },
-        } );
-
-        if ( !user ) {
-            return NextResponse.json(
-                { error: 'User not found' },
-                { status: 404 },
-            );
-        }
-
         const totalDosesNumber = parseInt( totalDoses );
 
         if ( isNaN( totalDosesNumber ) ) {
