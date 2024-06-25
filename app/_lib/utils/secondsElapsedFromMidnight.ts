@@ -4,6 +4,7 @@ import utc from 'dayjs/plugin/utc';
 dayjs.extend( utc );
 
 export async function secondsElapsedFromMidnight( time: string ): Promise<number> {
+    if ( !time ) return;
     const [hoursStr, minutesStr] = time.split( ':' );
 
     const hours = Number( hoursStr );

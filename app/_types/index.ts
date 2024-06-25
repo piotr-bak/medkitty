@@ -7,6 +7,8 @@ export * from './API/Pet/PetInvitation';
 export * from './API/Plan/Day';
 export * from './API/Plan/MedicationPlan';
 export * from './API/User/User';
+export * from './components/DialProps';
+export * from './components/DoseCardProps';
 export * from './components/DoseFormValues';
 export * from './components/ModalProps';
 export * from './components/PetFormProps';

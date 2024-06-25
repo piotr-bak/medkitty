@@ -9,23 +9,27 @@ import TabPanel from '@mui/lab/TabPanel';
 import Tab from '@mui/material/Tab';
 import { DoseForm } from '../DoseForm/DoseForm';
 import { Modal } from '../Modal/Modal';
-import { DayView } from './DayView/DayView';
-import styles from './PlanView.module.scss';
-import SpeedDial from '@mui/material/SpeedDial';
-import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import { DaySchedule } from '../DaySchedule/DaySchedule';
+import styles from './PlanBoard.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
+import PetsIcon from '@mui/icons-material/Pets';
+import { Dial } from '../Dial/Dial';
 
-export function PlanView( {
+export function PlanBoard( {
     data,
 }: {
     data: MedicationPlan | null | undefined;
 } ) {
-    //const petId = useSearchParams().get( 'id' );
     const [value, setValue] = useState( '0' );
     const [activeDayId, setActiveDayId] = useState<string | undefined>(
         undefined,
     );
+
     const { ref, openModal, onClose } = useModal();
+
+    const actions = [
+        { icon: <EditIcon />, name: 'Edit plan', target: openModal },
+    ];
 
     useEffect( () => {
         if ( data && data.days.length > 0 ) {
@@ -38,13 +42,6 @@ export function PlanView( {
         if ( data?.days ) {
             setActiveDayId( data?.days[parseInt( newValue )]?.id );
         }
-    };
-
-    const handleButtonClick = () => {
-        if ( activeDayId ) {
-            console.log( `Active Day ID: ${activeDayId}` );
-        }
-        openModal();
     };
 
     return (
@@ -68,7 +65,7 @@ export function PlanView( {
                             {data.days.map( ( day, index ) => {
                                 return (
                                     <TabPanel value={String( index )} key={crypto.randomUUID()}>
-                                        <DayView dayData={day} />
+                                        <DaySchedule dayData={day} />
                                     </TabPanel>
                                 );
                             } )}
@@ -77,12 +74,7 @@ export function PlanView( {
                 )}
             </div>
             <div className={styles.bottom}>
-                <SpeedDial
-                    ariaLabel='MedKitty add medicine'
-                    sx={{ position: 'absolute', bottom: 32, right: 32 }}
-                    icon={<SpeedDialIcon openIcon={<EditIcon />} />}
-                    onClick={handleButtonClick}
-                />
+                <Dial actions={actions} openIcon={<PetsIcon />} />
             </div>
             <Modal ref={ref} onClose={onClose}>
                 <DoseForm dayId={activeDayId ? activeDayId : ''} />
