@@ -50,8 +50,8 @@ model MedicationPlan {
   name      String
   startDate DateTime
   endDate   DateTime
-  user      User     @relation(fields: [userId], references: [id])
-  pet       Pet      @relation(fields: [petId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pet       Pet      @relation(fields: [petId], references: [id], onDelete: Cascade)
   days      Day[]    @relation("MedicationPlanDays")
 }
 
@@ -59,20 +59,20 @@ model Day {
   id               String         @id @default(uuid())
   medicationPlanId String
   date             DateTime
-  medicationPlan   MedicationPlan @relation(name: "MedicationPlanDays", fields: [medicationPlanId], references: [id])
+  medicationPlan   MedicationPlan @relation(name: "MedicationPlanDays", fields: [medicationPlanId], references: [id], onDelete: Cascade)
   doses            Dose[]
 }
 
 model Dose {
   id                   String             @id @default(uuid())
   dayId                String
-  offset               Int // in minutes from midnight
+  offset           Int // in minutes from midnight
   medicationId         String
   plannedAmount        Float
   givenAmount          Float? // Nullable if the dose hasn't been administered yet
   cumulativeAdjustment Int                @default(0) // in minutes, to optionally adjust for doses administered too late/too early
   status               DoseStatus         @default(PENDING)
-  day                  Day                @relation(fields: [dayId], references: [id])
+  day                  Day                @relation(fields: [dayId], references: [id], onDelete: Cascade)
   medication           Medication         @relation(fields: [medicationId], references: [id])
   administeredDoses    AdministeredDose[]
 
@@ -103,7 +103,7 @@ model AdministeredDose {
   doseId       String
   medicationId String
   time         DateTime
-  dose         Dose       @relation(fields: [doseId], references: [id])
+  dose         Dose       @relation(fields: [doseId], references: [id], onDelete: SetNull)
   medication   Medication @relation(fields: [medicationId], references: [id])
 }
 
@@ -112,7 +112,7 @@ model PetInvitation {
   petId  String
   userId String
   status InvitationStatus @default(PENDING)
-  pet    Pet              @relation(fields: [petId], references: [id])
+  pet    Pet              @relation(fields: [petId], references: [id], onDelete: Cascade)
   user   User             @relation(fields: [userId], references: [id])
 }
 
