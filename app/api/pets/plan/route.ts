@@ -30,11 +30,7 @@ export async function GET( request: Request ) {
                 },
             } );
 
-            if ( !medicationPlan )
-                return NextResponse.json(
-                    { error: 'Pet not found or no plan created yet' },
-                    { status: 404 },
-                );
+            if ( !medicationPlan ) return null;
 
             return NextResponse.json( medicationPlan );
         }
