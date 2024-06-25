@@ -5,13 +5,14 @@ import IconButton from '@mui/material/IconButton';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { PetForm } from '@/app/_components/PetForm/PetForm';
 import { PlanForm } from '@/app/_components/PlanForm/PlanForm';
-import { PlanView } from '@/app/_components/PlanView/PlanView';
+import { PlanBoard } from '@/app/_components/PlanBoard/PlanBoard';
 import { useFetch } from '@/app/_lib/hooks/useFetch';
 import { useSearchParams } from 'next/navigation';
 import styles from './page.module.scss';
 import MenuIcon from '@mui/icons-material/Menu';
 import type { MedicationPlan } from '@/app/_types';
 import type { PetFormMode } from '@/app/_types';
+import { PetDetails } from '@/app/_components/PetDetails/PetDetails';
 
 export default function Page() {
     const petId = useSearchParams().get( 'id' );
@@ -38,31 +39,17 @@ export default function Page() {
                 </section>
             ) : (
                 <>
-                    <IconButton
-                        className={styles.puller}
-                        onClick={() => setDrawerOpen( true )}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <SwipeableDrawer
-                        anchor="left"
-                        open={drawerOpen}
-                        onClose={() => setDrawerOpen( false )}
-                        onOpen={() => setDrawerOpen( true )}
-                    >
-                        <div className={styles.drawerContent}>
-                            <PetForm petId={petId} />
-                        </div>
-                    </SwipeableDrawer>
                     {data ? (
                         <section className={styles.planSection}>
-                            <PlanView data={data} />
+                            <PetDetails petId={petId} />
+                            <PlanBoard data={data} />
                         </section>
-                    ) : (
+                    ) : data === null ? (
                         <section className={styles.planSection}>
+                            <PetDetails petId={petId} />
                             <PlanForm />
                         </section>
-                    )}
+                    ) : undefined}
                 </>
             )}
         </main>
