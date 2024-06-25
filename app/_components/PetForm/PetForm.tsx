@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { revalidateFetch, useFetch } from '@/app/_lib/hooks/useFetch';
-import { addPet, updatePet } from '@/app/_lib/services/petService';
+import { addPet, deletePet, updatePet } from '@/app/_lib/services/petService';
 import type { Pet } from '@/app/_types';
 import { Controller, useForm, type SubmitHandler } from 'react-hook-form';
 import styles from './PetForm.module.scss';
@@ -46,6 +46,17 @@ export function PetForm( { petId, mode }: PetFormProps ) {
         }
         revalidateFetch( '/api/pets' );
     };
+
+    const handleDelete = async () => {
+        if ( petId ) {
+            const deleteComplete = await deletePet( petId );
+            if ( deleteComplete ) {
+                revalidateFetch( '/api/pets' );
+                router.push( `${process.env.NEXT_PUBLIC_APP_URL}/dashboard` );
+            }
+        }
+    }
+
 
     if ( isLoading ) return (
         <div className={styles.placeholder}>
@@ -131,7 +142,7 @@ export function PetForm( { petId, mode }: PetFormProps ) {
                     >Save</Button>
                     {( mode === 'edit' ) &&
                         <Button
-                            type="submit"
+                            onClick={handleDelete}
                             variant="contained"
                             color="error"
                             size="medium"
