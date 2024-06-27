@@ -1,0 +1,28 @@
+@import '../../styles/variables';
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.cardOuter {
+    background-color: $black;
+    width: 18rem;
+    color: $white;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    margin-inline: 1rem;
+}
+
+.cardHeading {
+    text-align: right;
+    margin-block: 0.2rem;
+    margin-inline-end: 1rem;
+}
+
+.cardInner {
+    background-color: $background;
+    color: $black
+}
+

@@ -5,7 +5,7 @@ import MedicationIcon from '@mui/icons-material/Medication';
 import PetsIcon from '@mui/icons-material/Pets';
 
 import { Dial } from '@/app/_components/Dial/Dial';
-import { DailySchedule } from '@/app/_components/DoseSummary/DoseSummary';
+import { DoseSummary } from '@/app/_components/DoseSummary/DoseSummary';
 import { PetList } from '@/app/_components/PetList/PetList';
 
 import illustration from '../../_assets/vet-illustration.svg'
@@ -20,7 +20,7 @@ export default function Page() {
     return (
         <>
             <section>
-                <DailySchedule />
+                <DoseSummary />
                 <PetList />
                 <Dial actions={actions} openIcon={<PetsIcon />} />
             </section>

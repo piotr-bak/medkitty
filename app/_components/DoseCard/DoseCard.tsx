@@ -28,7 +28,7 @@ export function DoseCard( { doseData }: DoseCardProps ) {
                     <TimelineContent className={styles.timelineContent}>
                         {doseData.map( ( subitem ) => {
                             return (
-                                <DoseDetails key={crypto.randomUUID()} dose={subitem} />
+                                <DoseDetails key={crypto.randomUUID()} dose={subitem} className={styles.innerCard} />
                             )
                         } )}
                     </TimelineContent>
