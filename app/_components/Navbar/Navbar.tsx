@@ -1,9 +1,11 @@
-import { UserInfo } from '../UserInfo/UserInfo';
-import Link from 'next/link';
-import styles from './Navbar.module.scss';
-import Button from '@mui/material/Button';
-import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
+import LogoutIcon from '@mui/icons-material/Logout';
+import Button from '@mui/material/Button';
+import Link from 'next/link';
+
+import styles from './Navbar.module.scss';
+import { UserInfo } from '../UserInfo/UserInfo';
+
 
 export function Navbar() {
     return (

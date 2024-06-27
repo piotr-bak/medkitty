@@ -1,6 +1,8 @@
-import prisma from '@/app/_lib/prisma';
-import { handleAuth, handleCallback, type Session } from '@auth0/nextjs-auth0';
 import type { NextApiRequest } from 'next';
+
+import { handleAuth, handleCallback, type Session } from '@auth0/nextjs-auth0';
+
+import prisma from '@/app/_lib/prisma';
 
 async function afterCallback(
     req: NextApiRequest,

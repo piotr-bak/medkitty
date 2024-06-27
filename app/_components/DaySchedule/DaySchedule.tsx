@@ -1,13 +1,17 @@
 'use client';
 
-import type { Day } from '@/app/_types';
-import styles from './DaySchedule.module.scss';
+import { useEffect, useState } from 'react';
+
 import Timeline from '@mui/lab/Timeline';
 import { timelineOppositeContentClasses } from '@mui/lab/TimelineOppositeContent';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
-import { useEffect, useState } from 'react';
+
+
 import { sortDoseData } from '@/app/_lib/utils/sortDoseData';
+import type { Day } from '@/app/_types';
+
+import styles from './DaySchedule.module.scss';
 import { DoseCard } from '../DoseCard/DoseCard';
 
 dayjs.extend( localizedFormat );
@@ -21,7 +25,7 @@ export function DaySchedule( { dayData }: { dayData: Day } ) {
             const sortedData = sortDoseData( doses );
             setSortedDoses( sortedData );
         }
-    }, [dayData] );
+    }, [dayData, doses] );
 
     return (
         <>

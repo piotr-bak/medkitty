@@ -1,19 +1,25 @@
 'use client';
 
 import { useEffect, useState, type SyntheticEvent } from 'react';
-import { useModal } from '@/app/_lib/hooks/useModal';
-import type { MedicationPlan } from '@/app/_types';
+
+import EditIcon from '@mui/icons-material/Edit';
+import PetsIcon from '@mui/icons-material/Pets';
+import TuneIcon from '@mui/icons-material/Tune';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Tab from '@mui/material/Tab';
+
+import { useModal } from '@/app/_lib/hooks/useModal';
+import type { MedicationPlan } from '@/app/_types';
+
+import styles from './PlanBoard.module.scss';
+import { DaySchedule } from '../DaySchedule/DaySchedule';
+import { Dial } from '../Dial/Dial';
 import { DoseForm } from '../DoseForm/DoseForm';
 import { Modal } from '../Modal/Modal';
-import { DaySchedule } from '../DaySchedule/DaySchedule';
-import styles from './PlanBoard.module.scss';
-import EditIcon from '@mui/icons-material/Edit';
-import PetsIcon from '@mui/icons-material/Pets';
-import { Dial } from '../Dial/Dial';
+
+
 
 export function PlanBoard( {
     data,
@@ -28,7 +34,7 @@ export function PlanBoard( {
     const { ref, openModal, onClose } = useModal();
 
     const actions = [
-        { icon: <EditIcon />, name: 'Edit plan', target: openModal },
+        { icon: <TuneIcon />, name: 'Plan settings', target: openModal },
     ];
 
     useEffect( () => {

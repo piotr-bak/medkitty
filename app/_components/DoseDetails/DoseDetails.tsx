@@ -1,8 +1,9 @@
-import type { Dose } from '@/app/_types';
-import styles from './DoseDetails.module.scss';
 import { convertOffsetToTime } from '@/app/_lib/utils/secondsElapsedFromMidnight';
+import type { Dose } from '@/app/_types';
 
-export function DoseDetails( { dose }: Dose ) {
+import styles from './DoseDetails.module.scss';
+
+export function DoseDetails( { dose }: { dose: Dose } ) {
     const item = {
         name: dose.medication.name,
         amount: dose.plannedAmount,

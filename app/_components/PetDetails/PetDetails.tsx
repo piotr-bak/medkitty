@@ -1,11 +1,16 @@
-import type { PetFormProps } from '@/app/_types';
-import type { Pet } from '@/app/_types';
+import { useState } from 'react';
+
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import IconButton from '@mui/material/IconButton';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import styles from './PetDetails.module.scss';
+
 import { useFetch } from '@/app/_lib/hooks/useFetch';
-import { useState } from 'react';
+import type { PetFormProps } from '@/app/_types';
+import type { Pet } from '@/app/_types';
+
+import styles from './PetDetails.module.scss';
+
+
 
 export function PetDetails( { petId }: PetFormProps ) {
     const { data: currentPet, isLoading, isError } = useFetch<Pet>(

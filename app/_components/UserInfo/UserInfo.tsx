@@ -1,4 +1,5 @@
 import { getSession } from '@auth0/nextjs-auth0';
+
 import styles from './UserInfo.module.scss';
 
 export async function UserInfo() {

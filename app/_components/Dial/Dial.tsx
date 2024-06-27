@@ -1,10 +1,12 @@
 'use client'
 
-import type { DialProps, DialTarget } from '@/app/_types';
 import SpeedDial from '@mui/material/SpeedDial';
-import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import { useRouter } from 'next/navigation';
+
+import type { DialProps, DialTarget } from '@/app/_types';
+
 import styles from './Dial.module.scss';
 
 export function Dial( { actions, openIcon }: DialProps ) {

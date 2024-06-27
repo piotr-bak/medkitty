@@ -1,18 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
+import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import { PetForm } from '@/app/_components/PetForm/PetForm';
-import { PlanForm } from '@/app/_components/PlanForm/PlanForm';
-import { PlanBoard } from '@/app/_components/PlanBoard/PlanBoard';
-import { useFetch } from '@/app/_lib/hooks/useFetch';
 import { useSearchParams } from 'next/navigation';
-import styles from './page.module.scss';
-import MenuIcon from '@mui/icons-material/Menu';
+
+import { PetDetails } from '@/app/_components/PetDetails/PetDetails';
+import { PetForm } from '@/app/_components/PetForm/PetForm';
+import { PlanBoard } from '@/app/_components/PlanBoard/PlanBoard';
+import { PlanForm } from '@/app/_components/PlanForm/PlanForm';
+import { useFetch } from '@/app/_lib/hooks/useFetch';
 import type { MedicationPlan } from '@/app/_types';
 import type { PetFormMode } from '@/app/_types';
-import { PetDetails } from '@/app/_components/PetDetails/PetDetails';
+
+import styles from './page.module.scss';
 
 export default function Page() {
     const petId = useSearchParams().get( 'id' );

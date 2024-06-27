@@ -1,6 +1,7 @@
-import prisma from '@/app/_lib/prisma';
-import { NextResponse } from 'next/server';
 import dayjs from 'dayjs';
+import { NextResponse } from 'next/server';
+
+import prisma from '@/app/_lib/prisma';
 import { authenticateUser } from '@/app/_lib/services/internalAuthService';
 
 export async function GET( request: Request ) {

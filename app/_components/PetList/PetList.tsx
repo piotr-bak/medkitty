@@ -1,15 +1,18 @@
-import { useFetch } from '@/app/_lib/hooks/useFetch';
-import type { Pet } from '@/app/_types';
-import Link from 'next/link';
-import styles from './PetList.module.scss';
-import ShareIcon from '@mui/icons-material/Share';
 import SettingsIcon from '@mui/icons-material/Settings';
+import ShareIcon from '@mui/icons-material/Share';
+import CircularProgress from '@mui/material/CircularProgress';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import CircularProgress from '@mui/material/CircularProgress';
+import Link from 'next/link';
+
+import { useFetch } from '@/app/_lib/hooks/useFetch';
+import type { Pet } from '@/app/_types';
+
+import styles from './PetList.module.scss';
+
 
 export function PetList() {
     const { data: pets, isError } = useFetch<Pet[]>( '/api/pets' );

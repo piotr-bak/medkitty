@@ -1,13 +1,16 @@
 'use client';
 
-import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
-import { addMedication } from '@/app/_lib/services/medicationService';
-import { revalidateFetch } from '@/app/_lib/hooks/useFetch';
-import styles from './MedicationForm.module.scss';
-import type { Medication } from '@/app/_types';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
+
+import { revalidateFetch } from '@/app/_lib/hooks/useFetch';
+import { addMedication } from '@/app/_lib/services/medicationService';
+import type { Medication } from '@/app/_types';
+
+import styles from './MedicationForm.module.scss';
+
 
 export function MedicationForm() {
     const { control, handleSubmit, reset, formState: { errors } } = useForm<Medication>();

@@ -1,7 +1,8 @@
+import { NextResponse } from 'next/server';
+
 import prisma from '@/app/_lib/prisma';
 import { authenticateUser } from '@/app/_lib/services/internalAuthService';
 import { secondsElapsedFromMidnight } from '@/app/_lib/utils/secondsElapsedFromMidnight';
-import { NextResponse } from 'next/server';
 
 export async function POST( request: Request ) {
     const { response, user } = await authenticateUser();

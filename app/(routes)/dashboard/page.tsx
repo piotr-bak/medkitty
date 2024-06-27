@@ -1,11 +1,14 @@
 'use client'
-import { Dial } from '@/app/_components/Dial/Dial';
-import { PetList } from '@/app/_components/PetList/PetList';
-import illustration from '../../_assets/vet-illustration.svg'
 import AddIcon from '@mui/icons-material/Add';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import MedicationIcon from '@mui/icons-material/Medication';
 import PetsIcon from '@mui/icons-material/Pets';
+
+import { Dial } from '@/app/_components/Dial/Dial';
+import { DailySchedule } from '@/app/_components/DoseSummary/DoseSummary';
+import { PetList } from '@/app/_components/PetList/PetList';
+
+import illustration from '../../_assets/vet-illustration.svg'
 
 export default function Page() {
     const actions = [
@@ -17,6 +20,7 @@ export default function Page() {
     return (
         <>
             <section>
+                <DailySchedule />
                 <PetList />
                 <Dial actions={actions} openIcon={<PetsIcon />} />
             </section>

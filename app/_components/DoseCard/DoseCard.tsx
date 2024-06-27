@@ -1,12 +1,14 @@
-import type { DoseCardProps } from '@/app/_types';
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
+import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
+import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import Stack from '@mui/material/Stack';
+
 import { convertOffsetToTime } from '@/app/_lib/utils/secondsElapsedFromMidnight';
+import type { DoseCardProps } from '@/app/_types';
+
 import styles from './DoseCard.module.scss';
 import { DoseDetails } from '../DoseDetails/DoseDetails';
 

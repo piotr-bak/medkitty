@@ -1,5 +1,7 @@
 import { forwardRef } from 'react';
+
 import type { ModalProps } from '@/app/_types';
+
 import styles from './Modal.module.scss';
 
 export const Modal = forwardRef<HTMLDialogElement, ModalProps>( ( props, ref ) => {

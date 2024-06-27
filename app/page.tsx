@@ -1,9 +1,10 @@
-import Button from '@mui/material/Button';
 import LoginIcon from '@mui/icons-material/Logout';
+import Button from '@mui/material/Button';
 import Image from 'next/image';
-import styles from './page.module.scss';
-import logo from './_assets/logo.svg';
+
 import illustration from './_assets/cat-and-dog.svg';
+import logo from './_assets/logo.svg';
+import styles from './page.module.scss';
 
 export default function Page() {
     return (

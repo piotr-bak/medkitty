@@ -1,5 +1,7 @@
-import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
+
+import type { ReactNode } from 'react';
+
 import { Inter } from 'next/font/google';
 import '@/app/styles/globals.scss';
 import { UserProvider } from '@auth0/nextjs-auth0/client';

@@ -1,6 +1,6 @@
+import type { PetInvitation } from './PetInvitation';
 import type { MedicationPlan } from '../Plan/MedicationPlan';
 import type { User } from '../User/User';
-import type { PetInvitation } from './PetInvitation';
 
 export interface Pet {
     id: string;

@@ -1,6 +1,7 @@
+import { NextResponse } from 'next/server';
+
 import prisma from '@/app/_lib/prisma';
 import { authenticateUser } from '@/app/_lib/services/internalAuthService';
-import { NextResponse } from 'next/server';
 
 export async function GET() {
     const { response, user } = await authenticateUser();

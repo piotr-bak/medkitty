@@ -1,5 +1,7 @@
-import useSWR, { mutate } from 'swr';
 import type { SWRConfiguration } from 'swr';
+
+import useSWR, { mutate } from 'swr';
+
 import serverErrors from './httpErrorCodes';
 
 interface FetchOptions extends RequestInit {
