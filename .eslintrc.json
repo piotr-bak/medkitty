@@ -1,3 +1,46 @@
 {
-  "extends": "next/core-web-vitals"
-}
+    "plugins": ["import"],
+    "extends": "next/core-web-vitals",
+    "rules": {
+      "import/order": [
+        "error",
+        {
+          "groups": [
+            "type",
+            "builtin", 
+            "external", 
+            "internal",
+            ["parent", "sibling", "index"],
+            "object",
+            "unknown"],
+          "pathGroups": [
+            {
+              "pattern": "react",
+              "group": "external",
+              "position": "before"
+            },
+            {
+              "pattern": "@/**",
+              "group": "internal"
+            },
+            {
+              "pattern": "*.module.scss",
+              "group": "object",
+              "position": "after"
+            },
+            {
+              "pattern": "**/*.{png,jpg,jpeg,gif,svg}",
+              "group": "unknown",
+              "position": "after"
+            }
+          ],
+          "pathGroupsExcludedImportTypes": ["react"],
+          "newlines-between": "always",
+          "alphabetize": {
+            "order": "asc",
+            "caseInsensitive": true
+          }
+        }
+      ]
+    }
+  }
