@@ -1,7 +1,7 @@
 import type { Dose } from "@/app/_types";
 
 export function sortDoseData( data: Dose[] ) {
-    if ( typeof data !== undefined || data?.length !== 0 ) {
+    if ( data?.length !== 0 ) {
         const sortedData = data?.sort( ( a, b ) => a.offset - b.offset );
         const sortedDosesLength = sortedData.length;
         const result = [];
