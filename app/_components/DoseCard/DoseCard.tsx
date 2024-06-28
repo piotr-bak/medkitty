@@ -4,7 +4,6 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import Stack from '@mui/material/Stack';
 
 import { convertOffsetToTime } from '@/app/_lib/utils/secondsElapsedFromMidnight';
 import type { DoseCardProps } from '@/app/_types';
@@ -18,7 +17,7 @@ export function DoseCard( { doseData }: DoseCardProps ) {
         <>
             <TimelineItem key={crypto.randomUUID()}>
                 <TimelineOppositeContent>
-                    {Array.isArray( doseData ) ? convertOffsetToTime( doseData[0].offset ) : convertOffsetToTime( doseData.offset )}
+                    {( Array.isArray( doseData ) && doseData.length > 0 ) ? convertOffsetToTime( doseData[0].offset ) : convertOffsetToTime( doseData.offset )}
                 </TimelineOppositeContent>
                 <TimelineSeparator>
                     <TimelineDot />
@@ -28,13 +27,13 @@ export function DoseCard( { doseData }: DoseCardProps ) {
                     <TimelineContent className={styles.timelineContent}>
                         {doseData.map( ( subitem ) => {
                             return (
-                                <DoseDetails key={crypto.randomUUID()} dose={subitem} className={styles.innerCard} />
+                                <DoseDetails key={crypto.randomUUID()} doseData={subitem} className={styles.innerCard} />
                             )
                         } )}
                     </TimelineContent>
                 ) : (
                     <TimelineContent className={styles.timelineContent}>
-                        <DoseDetails dose={doseData} />
+                        <DoseDetails doseData={doseData} />
                         {/* <div>
                             <h3>{data.medication.name}</h3>
                         </div> */}
