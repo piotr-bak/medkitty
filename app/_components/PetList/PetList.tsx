@@ -1,5 +1,6 @@
 import SettingsIcon from '@mui/icons-material/Settings';
 import ShareIcon from '@mui/icons-material/Share';
+import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -53,7 +54,11 @@ export function PetList() {
                         </div>
                         :
                         <div>
-                            <p>Click to add your first animal!</p>
+                            <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/dashboard/pet`}>
+                                <Alert
+                                    className={styles.infobox}
+                                    severity="info">Click here to add your first animal</Alert>
+                            </Link>
                         </div>
                     )}
             </List>

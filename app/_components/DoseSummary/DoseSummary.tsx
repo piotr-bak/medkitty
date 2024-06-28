@@ -21,7 +21,7 @@ export function DoseSummary() {
     return (
         <section>
             <div className={styles.wrapper}>
-                {data ? data.map( item => {
+                {( data && data.length > 0 ) ? data.map( item => {
                     const pet = item.day.medicationPlan.pet;
                     const petName = Array.isArray( pet ) ? pet.map( p => p.name ).join( ', ' ) : pet.name;
                     return (
