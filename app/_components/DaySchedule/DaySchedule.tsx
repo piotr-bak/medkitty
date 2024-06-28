@@ -9,7 +9,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 
 import { sortDoseData } from '@/app/_lib/utils/sortDoseData';
-import type { Day } from '@/app/_types';
+import type { Day, Dose } from '@/app/_types';
 
 import styles from './DaySchedule.module.scss';
 import { DoseCard } from '../DoseCard/DoseCard';
@@ -18,12 +18,12 @@ dayjs.extend( localizedFormat );
 
 export function DaySchedule( { dayData }: { dayData: Day } ) {
     const { id, medicationPlanId: planId, date, doses } = dayData;
-    const [sortedDoses, setSortedDoses] = useState();
+    const [sortedDoses, setSortedDoses] = useState<Dose[] | undefined>();
 
     useEffect( () => {
         if ( typeof doses !== 'undefined' ) {
             const sortedData = sortDoseData( doses );
-            setSortedDoses( sortedData );
+            setSortedDoses( sortedData as Dose[] );
         }
     }, [dayData, doses] );
 
@@ -45,7 +45,6 @@ export function DaySchedule( { dayData }: { dayData: Day } ) {
                             {sortedDoses && ( sortedDoses.map( ( dose ) => {
                                 return (
                                     <>
-                                        {console.log( JSON.stringify( dose ) )}
                                         <DoseCard key={crypto.randomUUID()} doseData={dose} />
                                     </>
                                 )

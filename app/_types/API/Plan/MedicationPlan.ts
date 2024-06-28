@@ -10,6 +10,6 @@ export interface MedicationPlan {
     startDate: Date;
     endDate: Date;
     user: User[];
-    pet: Pet[];
+    pet: Pet | Pet[];
     days: Day[];
 }

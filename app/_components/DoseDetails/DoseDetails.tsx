@@ -1,18 +1,18 @@
 import { convertOffsetToTime } from '@/app/_lib/utils/secondsElapsedFromMidnight';
-import type { Dose } from '@/app/_types';
+import type { DoseCardProps } from '@/app/_types';
 
 import styles from './DoseDetails.module.scss';
 
-export function DoseDetails( { dose }: { dose: Dose } ) {
+export function DoseDetails( { doseData, className, ...rest }: DoseCardProps ) {
     const item = {
-        name: dose.medication.name,
-        amount: dose.plannedAmount,
-        unit: ( dose.plannedAmount === 1 ) ?
-            dose.medication.doseUnit :
-            ( dose.medication.doseUnit.slice( -1 ) === 's' ?
-                dose.medication.doseUnit :
-                `${dose.medication.doseUnit}s` ),
-        administerTime: convertOffsetToTime( dose.offset ),
+        name: doseData.medication.name,
+        amount: doseData.plannedAmount,
+        unit: ( doseData.plannedAmount === 1 ) ?
+            doseData.medication.doseUnit :
+            ( doseData.medication.doseUnit.slice( -1 ) === 's' ?
+                doseData.medication.doseUnit :
+                `${doseData.medication.doseUnit}s` ),
+        administerTime: convertOffsetToTime( doseData.offset ),
     }
     return (
         <div className={styles.wrapper}>

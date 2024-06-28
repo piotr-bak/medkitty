@@ -1,6 +1,6 @@
-import type { Day } from "@/app/_types";
+import type { Dose } from "@/app/_types";
 
-export function sortDoseData( data: Day[] | undefined ) {
+export function sortDoseData( data: Dose[] ) {
     if ( typeof data !== undefined || data?.length !== 0 ) {
         const sortedData = data?.sort( ( a, b ) => a.offset - b.offset );
         const sortedDosesLength = sortedData.length;
