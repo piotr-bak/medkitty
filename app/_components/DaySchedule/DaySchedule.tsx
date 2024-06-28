@@ -29,7 +29,6 @@ export function DaySchedule( { dayData }: { dayData: Day } ) {
 
     return (
         <>
-            {console.log( sortedDoses )}
             {dayData && (
                 <>
                     <div className={styles.topbar}>

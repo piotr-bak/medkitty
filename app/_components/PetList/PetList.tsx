@@ -15,7 +15,7 @@ import styles from './PetList.module.scss';
 
 
 export function PetList() {
-    const { data: pets, isError } = useFetch<Pet[]>( '/api/pets' );
+    const { data: pets, isLoading, isError } = useFetch<Pet[]>( '/api/pets' );
 
     if ( isError ) return <div>an error occurred</div>;
 
@@ -47,10 +47,15 @@ export function PetList() {
                                 </ListItemButton>
                             </div>
                         </ListItem>
-                    ) ) : !isError &&
-                    <div className={styles.placeholder}>
-                        <CircularProgress />
-                    </div>}
+                    ) ) : ( isLoading ?
+                        <div className={styles.placeholder}>
+                            <CircularProgress />
+                        </div>
+                        :
+                        <div>
+                            <p>Click to add your first animal!</p>
+                        </div>
+                    )}
             </List>
         </div>
     );

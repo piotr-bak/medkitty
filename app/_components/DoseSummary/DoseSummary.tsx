@@ -1,16 +1,27 @@
+import Image from 'next/image';
+
 import { useFetch } from '@/app/_lib/hooks/useFetch';
 import type { Dose } from '@/app/_types';
 
 import styles from './DoseSummary.module.scss';
+import Illustration from '../../_assets/vet-illustration.svg'
 import { DoseDetails } from '../DoseDetails/DoseDetails';
-
+//import { useEffect, useState } from 'react';
 export function DoseSummary() {
-    const { data, isError } = useFetch<Dose[] | undefined>( '/api/summary' );
+    const { data, isLoading, isError } = useFetch<Dose[] | undefined>( '/api/summary' );
+    //const [sortedData, setSortedData] = useState<Dose[] | undefined>();
+
+    // useEffect( () => {
+    //     if ( typeof doses !== 'undefined' ) {
+    //         const sortedData = sortDoseData( doses );
+    //         setSortedDoses( sortedData as Dose[] );
+    //     }
+    // }, [sortedData, data] );
+
     return (
         <section>
-            <h1>summary</h1>
             <div className={styles.wrapper}>
-                {data && data.map( item => {
+                {data ? data.map( item => {
                     const pet = item.day.medicationPlan.pet;
                     const petName = Array.isArray( pet ) ? pet.map( p => p.name ).join( ', ' ) : pet.name;
                     return (
@@ -23,7 +34,9 @@ export function DoseSummary() {
                             </div>
                         </div>
                     )
-                } )}
+                } ) : (
+                    <Image src={Illustration} alt={'dog at the vet'} />
+                )}
             </div>
         </section>
     )

@@ -4,11 +4,12 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import MedicationIcon from '@mui/icons-material/Medication';
 import PetsIcon from '@mui/icons-material/Pets';
 
+
 import { Dial } from '@/app/_components/Dial/Dial';
 import { DoseSummary } from '@/app/_components/DoseSummary/DoseSummary';
 import { PetList } from '@/app/_components/PetList/PetList';
 
-import illustration from '../../_assets/vet-illustration.svg'
+import styles from '../dashboard/page.module.scss'
 
 export default function Page() {
     const actions = [
@@ -19,8 +20,16 @@ export default function Page() {
 
     return (
         <>
-            <section>
+            <section className={styles.upper}>
+                <div className={styles.topbar}>
+                    <h2>today</h2>
+                </div>
                 <DoseSummary />
+            </section>
+            <section className={styles.lower}>
+                <div className={styles.topbar}>
+                    <h2>your pets</h2>
+                </div>
                 <PetList />
                 <Dial actions={actions} openIcon={<PetsIcon />} />
             </section>
