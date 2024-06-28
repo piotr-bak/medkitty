@@ -217,9 +217,9 @@ export async function DELETE( request: Request ) {
             );
         }
     } catch ( error ) {
-        console.error( 'Error deleting pet:', error ); // Log the full error
+        console.error( 'Error deleting pet:', error );
         return NextResponse.json(
-            { error: 'Internal Server Error', details: error.message }, // Include the error message in the response
+            { error: 'Internal Server Error' },
             { status: 500 },
         );
     }
