@@ -19,6 +19,7 @@
         "@mui/icons-material": "^5.15.20",
         "@mui/lab": "5.0.0-alpha.170",
         "@mui/material": "^5.15.20",
+        "@mui/x-data-grid": "^7.8.0",
         "@prisma/client": "^5.16.0",
         "@supabase/supabase-js": "^2.44.0",
         "@types/auth0-js": "^9.21.6",

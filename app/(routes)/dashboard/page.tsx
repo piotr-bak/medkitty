@@ -14,12 +14,12 @@ import styles from '../dashboard/page.module.scss'
 export default function Page() {
     const actions = [
         { icon: <AddIcon />, name: 'Add a new pet', target: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/pet` },
-        { icon: <MedicationIcon />, name: 'Medications', target: undefined },
+        { icon: <MedicationIcon />, name: 'Medications', target: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/medications` },
         { icon: <GroupAddIcon />, name: 'Invites', target: undefined },
     ];
 
     return (
-        <>
+        <main>
             <section className={styles.upper}>
                 <div className={styles.topbar}>
                     <h2>today</h2>
@@ -33,6 +33,6 @@ export default function Page() {
                 <PetList />
                 <Dial actions={actions} openIcon={<PetsIcon />} />
             </section>
-        </>
+        </main>
     );
 }
